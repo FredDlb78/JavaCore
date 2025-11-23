@@ -5,7 +5,7 @@ public class AgeCategorization {
     public static void main(String[] args) {
 
         //-1, 0, 9, 10, 17, 18, 25, 64, 65
-        int age = 65;
+        int age = 9;
 
         if (age < 0) {
             System.err.println("Un âge ne peut pas être négatif. Age saisi: " + age + "an(s).");
@@ -17,7 +17,7 @@ public class AgeCategorization {
             System.out.println("Vous avez " + age + " an(s). Vous faites parti(e) de la catégorie Jeune adulte.");
         }  else if (age >= 10) {
             System.out.println("Vous avez " + age + " an(s). Vous faites parti(e) de la catégorie Adolescent.");
-        } else if (age < 10) {
+        } else {
             System.out.println("Vous avez " + age + " an(s). Vous faites parti(e) de la catégorie Enfant.");
         }
 
