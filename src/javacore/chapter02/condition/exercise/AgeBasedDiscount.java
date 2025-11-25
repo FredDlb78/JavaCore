@@ -5,32 +5,34 @@ public class AgeBasedDiscount {
     public static void main(String[] args) {
 
         // -1, 0, 25, 26, 64, 65
-        int age = 65;
+        int age = 25;
         // -1, 0, 50
         double price = 50;
 
-        double youngDiscountRate = 0.25;
-        double seniorDiscountRate = 0.75;
-        double youngPrice = price - (price * youngDiscountRate);
-        double seniorPrice = price - (price * seniorDiscountRate);
+        double discountRate = 0;
         String displayAge = "Votre âge est de " + age + " an(s).";
 
-        if (age < 0) {
-            System.err.println("Un age ne peut être négatif, votre âge ne peut pas être " + age + " an(s).");
-        } else if (price < 0) {
-            System.err.println("Le prix ne peut être négatif. Le prix est actuellement de " + price + "€.");
-        } else if (age <= 25) {
-            System.out.println(displayAge);
-            System.out.println("Vous bénéficiez d'une réduction de " + youngDiscountRate * 100 + "%.");
-            System.out.println("Le prix de votre billet de train est de " + youngPrice + "€.");
+        if (age <= 25) {
+            discountRate  = 0.25;
+            price = price - (price * discountRate);
         } else if (age >= 65) {
-            System.out.println(displayAge);
-            System.out.println("Vous bénéficiez d'une réduction de " + seniorDiscountRate * 100 + "%.");
-            System.out.println("Le prix de votre billet de train est de " + seniorPrice + "€.");
+            discountRate = 0.75;
+            price = price - (price * discountRate);
+        } else {
+        }
+
+        String discounRateMsg = "Vous bénéficiez d'une réduction de " + discountRate * 100 + "%.";
+        String priceMsg = "Le prix de votre billet de train est de " + price + "€.";
+        String errMsg = "Le prix et/ou l'age ne peuvent pas être négatif. Prix: " + price + " , Age: " + age + ".";
+
+        if (age < 0) {
+            System.err.println(errMsg);
+        } else if(price < 0) {
+            System.err.println(errMsg);
         } else {
             System.out.println(displayAge);
-            System.out.println("Vous ne bénéficiez d'aucune réduction.");
-            System.out.println("Le prix de votre billet de train est de " + price + "€.");
+            System.out.println(discounRateMsg);
+            System.out.println(priceMsg);
         }
     }
 }
