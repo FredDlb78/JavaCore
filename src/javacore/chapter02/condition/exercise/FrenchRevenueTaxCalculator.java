@@ -6,26 +6,9 @@ public class FrenchRevenueTaxCalculator {
 
         //-1, 0, 11294, 11295, 28797, 28798, 82341, 83342, 177106, 177107
         double annualBrutSalary = 45000;
+
         double workerSocialContributionsRate = 0.23;
         double managerSocialContributionsRate = 0.25;
-
-        String status = "ouvrier"; // ou cadre
-
-        double annualTaxableNetSalary;
-
-        if (status.equals("ouvrier")) {
-            annualTaxableNetSalary = annualBrutSalary - (annualBrutSalary * workerSocialContributionsRate);
-            System.out.println("Le salaire net imposable d'un ouvrier avant l'abattement est " + annualTaxableNetSalary + "€ pour un taux de "
-                    + workerSocialContributionsRate * 100 + "% et un salaire brut de " + annualBrutSalary + "€.");
-        } else {
-            annualTaxableNetSalary = annualBrutSalary - (annualBrutSalary * managerSocialContributionsRate);
-            System.out.println("Le salaire net imposable d'un cadre est " + annualTaxableNetSalary + "€ pour un taux de "
-                    + managerSocialContributionsRate * 100 + "% et un salaire net de " + annualBrutSalary + "€.");
-        }
-
-        double reduction = 10.0 / 100;
-        double annualTaxableNetIncomeAfterReduction = annualTaxableNetSalary - (annualTaxableNetSalary * reduction);
-//        System.out.println("Le salaire net annuel imposable après abattement est de : " + annualTaxableNetIncomeAfterReduction + " €");
 
         double untaxableLimit = 11294.0;     // 0 % jusqu'à cette limite
         double elevenPercentLimit = 28797.0; // 11 % jusqu'à cette limite
@@ -49,6 +32,24 @@ public class FrenchRevenueTaxCalculator {
         double thirtyPercentTaxeAmount;
         double elevenPercentTaxeAmount;
         double untaxableTaxeAmount;
+
+        String status = "ouvrier"; // ou cadre
+
+        double annualTaxableNetSalary;
+
+        if (status.equals("ouvrier")) {
+            annualTaxableNetSalary = annualBrutSalary - (annualBrutSalary * workerSocialContributionsRate);
+            System.out.println("Le salaire net imposable d'un ouvrier avant l'abattement est " + annualTaxableNetSalary + "€ pour un taux de "
+                    + workerSocialContributionsRate * 100 + "% et un salaire brut de " + annualBrutSalary + "€.");
+        } else {
+            annualTaxableNetSalary = annualBrutSalary - (annualBrutSalary * managerSocialContributionsRate);
+            System.out.println("Le salaire net imposable d'un cadre est " + annualTaxableNetSalary + "€ pour un taux de "
+                    + managerSocialContributionsRate * 100 + "% et un salaire net de " + annualBrutSalary + "€.");
+        }
+
+        double reduction = 10.0 / 100;
+        double annualTaxableNetIncomeAfterReduction = annualTaxableNetSalary - (annualTaxableNetSalary * reduction);
+//        System.out.println("Le salaire net annuel imposable après abattement est de : " + annualTaxableNetIncomeAfterReduction + " €");
 
         String errMsg = "Le salaire net après réduction ne peut pas être négatif.";
 
