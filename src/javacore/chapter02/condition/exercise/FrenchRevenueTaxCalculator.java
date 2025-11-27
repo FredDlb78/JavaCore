@@ -4,150 +4,111 @@ public class FrenchRevenueTaxCalculator {
 
     public static void main(String[] args) {
 
-        //-1, 0, 11294, 11295, 28797, 28798, 82341, 83342, 177106, 177107
+        // -1, 0, 11294, 11295, 28797, 28798, 82341, 83342, 177106, 177107
         double annualBrutSalary = 45000;
 
-        double workerSocialContributionsRate = 0.23;
-        double managerSocialContributionsRate = 0.25;
+        final double WORKER_SOCIAL_CONTRIBUTIONS_RATE = 0.23;
+        final double MANAGER_SOCIAL_CONTRIBUTIONS_RATE = 0.25;
 
-        double untaxableLimit = 11294.0;     // 0 % jusqu'à cette limite
-        double elevenPercentLimit = 28797.0; // 11 % jusqu'à cette limite
-        double thirtyPercentLimit = 82341.0; // 30 % jusqu'à cette limite
-        double fortyOnePercentLimit = 177106.0; // 41 % jusqu'à cette limite
+        final double UNTAXABLE_LIMIT = 11294.0;         // 0 %
+        final double ELEVEN_PERCENT_LIMIT = 28797.0;    // 11 %
+        final double THIRTY_PERCENT_LIMIT = 82341.0;    // 30 %
+        final double FORTY_ONE_PERCENT_LIMIT = 177106.0; // 41 %
         // 45% au-dessus de cette limite
 
-        double untaxablePercentRate = 0;
-        double elevenPercentRate = 0.11;
-        double thirtyPercentRate = 0.30;
-        double fortyOnePercentRate = 0.41;
-        double fortyFivePercentRate = 0.45;
+        final double UNTAXABLE_PERCENT_RATE = 0.0;
+        final double ELEVEN_PERCENT_RATE = 0.11;
+        final double THIRTY_PERCENT_RATE = 0.30;
+        final double FORTY_ONE_PERCENT_RATE = 0.41;
+        final double FORTY_FIVE_PERCENT_RATE = 0.45;
 
-        double fortyFivePercentPortion;
-        double fortyOnePercentPortion;
-        double thirtyPercentPortion;
-        double elevenPercentPortion;
-        double untaxablePortion;
-        double fortyFivePercentTaxeAmount;
-        double fortyOnePercentTaxeAmount;
-        double thirtyPercentTaxeAmount;
-        double elevenPercentTaxeAmount;
-        double untaxableTaxeAmount;
+        double fortyFivePercentPortion = 0;
+        double fortyOnePercentPortion = 0;
+        double thirtyPercentPortion = 0;
+        double elevenPercentPortion = 0;
+        double untaxablePortion = 0;
+
+        double fortyFivePercentTaxeAmount = 0;
+        double fortyOnePercentTaxeAmount = 0;
+        double thirtyPercentTaxeAmount = 0;
+        double elevenPercentTaxeAmount = 0;
+        double untaxableTaxeAmount = 0;
 
         String status = "ouvrier"; // ou cadre
 
         double annualTaxableNetSalary;
+        double socialContributionsRate = 0;
 
         if (status.equals("ouvrier")) {
-            annualTaxableNetSalary = annualBrutSalary - (annualBrutSalary * workerSocialContributionsRate);
-            System.out.println("Le salaire net imposable d'un ouvrier avant l'abattement est " + annualTaxableNetSalary + "€ pour un taux de "
-                    + workerSocialContributionsRate * 100 + "% et un salaire brut de " + annualBrutSalary + "€.");
+            socialContributionsRate = WORKER_SOCIAL_CONTRIBUTIONS_RATE;
+        } else if (status.equals("cadre")) {
+            socialContributionsRate = MANAGER_SOCIAL_CONTRIBUTIONS_RATE;
         } else {
-            annualTaxableNetSalary = annualBrutSalary - (annualBrutSalary * managerSocialContributionsRate);
-            System.out.println("Le salaire net imposable d'un cadre est " + annualTaxableNetSalary + "€ pour un taux de "
-                    + managerSocialContributionsRate * 100 + "% et un salaire net de " + annualBrutSalary + "€.");
+            System.out.println("Statut inconnu: " + status);
+        }
+        annualTaxableNetSalary = annualBrutSalary - (annualBrutSalary * socialContributionsRate);
+        System.out.println("Le salaire net imposable d'un " + status + " avant l'abattement est " + annualTaxableNetSalary + "€ pour un taux de "
+                + socialContributionsRate * 100 + "% et un salaire brut de " + annualBrutSalary + "€.");
+
+        final double REDUCTION = 10.0 / 100;
+        double annualTaxableNetIncomeAfterReduction =
+                annualTaxableNetSalary - (annualTaxableNetSalary * REDUCTION);
+
+        boolean isAnnualTaxableNetIncomeAfterReductionNegative =
+                annualTaxableNetIncomeAfterReduction < 0;
+
+        if (!isAnnualTaxableNetIncomeAfterReductionNegative) {
+
+            if (annualTaxableNetIncomeAfterReduction > FORTY_ONE_PERCENT_LIMIT) {
+                fortyFivePercentPortion = annualTaxableNetIncomeAfterReduction - FORTY_ONE_PERCENT_LIMIT;
+            }
+            fortyFivePercentTaxeAmount = fortyFivePercentPortion * FORTY_FIVE_PERCENT_RATE;
+
+            if (annualTaxableNetIncomeAfterReduction > FORTY_ONE_PERCENT_LIMIT) {
+                fortyOnePercentPortion = FORTY_ONE_PERCENT_LIMIT - THIRTY_PERCENT_LIMIT;
+            } else if (annualTaxableNetIncomeAfterReduction > THIRTY_PERCENT_LIMIT) {
+                fortyOnePercentPortion = annualTaxableNetIncomeAfterReduction - THIRTY_PERCENT_LIMIT;
+            }
+            fortyOnePercentTaxeAmount = fortyOnePercentPortion * FORTY_ONE_PERCENT_RATE;
+
+            if (annualTaxableNetIncomeAfterReduction > THIRTY_PERCENT_LIMIT) {
+                thirtyPercentPortion = THIRTY_PERCENT_LIMIT - ELEVEN_PERCENT_LIMIT;
+            } else if (annualTaxableNetIncomeAfterReduction > ELEVEN_PERCENT_LIMIT) {
+                thirtyPercentPortion = annualTaxableNetIncomeAfterReduction - ELEVEN_PERCENT_LIMIT;
+            }
+            thirtyPercentTaxeAmount = thirtyPercentPortion * THIRTY_PERCENT_RATE;
+
+            if (annualTaxableNetIncomeAfterReduction > ELEVEN_PERCENT_LIMIT) {
+                elevenPercentPortion = ELEVEN_PERCENT_LIMIT - UNTAXABLE_LIMIT;
+            } else if (annualTaxableNetIncomeAfterReduction > UNTAXABLE_LIMIT) {
+                elevenPercentPortion = annualTaxableNetIncomeAfterReduction - UNTAXABLE_LIMIT;
+            }
+            elevenPercentTaxeAmount = elevenPercentPortion * ELEVEN_PERCENT_RATE;
+
+            if (annualTaxableNetIncomeAfterReduction > UNTAXABLE_LIMIT) {
+                untaxablePortion = UNTAXABLE_LIMIT;
+            } else if (annualTaxableNetIncomeAfterReduction >= 0) {
+                untaxablePortion = annualTaxableNetIncomeAfterReduction;
+            }
+            untaxableTaxeAmount = untaxablePortion * UNTAXABLE_PERCENT_RATE;
+
+            System.out.println("Le salaire annuel net avant impôt et après abattement de "
+                    + (REDUCTION * 100) + "% est de : " + annualTaxableNetIncomeAfterReduction + " €.");
         }
 
-        double reduction = 10.0 / 100;
-        double annualTaxableNetIncomeAfterReduction = annualTaxableNetSalary - (annualTaxableNetSalary * reduction);
-//        System.out.println("Le salaire net annuel imposable après abattement est de : " + annualTaxableNetIncomeAfterReduction + " €");
+        double totalTaxe = 0;
+        double annualNetSalary = 0;
+        double effectiveTaxRate = 0;
 
-        String errMsg = "Le salaire net après réduction ne peut pas être négatif.";
+        if (!isAnnualTaxableNetIncomeAfterReductionNegative) {
+            totalTaxe = untaxableTaxeAmount + elevenPercentTaxeAmount + thirtyPercentTaxeAmount
+                    + fortyOnePercentTaxeAmount + fortyFivePercentTaxeAmount;
 
-        boolean isAnnualTaxableNetIncomeAfterReductionNegative = annualTaxableNetIncomeAfterReduction < 0;
-
-        if (isAnnualTaxableNetIncomeAfterReductionNegative) {
-            fortyFivePercentPortion = 0;
-//            System.out.println(errMsg);
-        } else if (annualTaxableNetIncomeAfterReduction > fortyOnePercentLimit) {
-            fortyFivePercentPortion = annualTaxableNetIncomeAfterReduction - fortyOnePercentLimit;
-        } else {
-            fortyFivePercentPortion = 0;
-        }
-        fortyFivePercentTaxeAmount = fortyFivePercentPortion * fortyFivePercentRate;
-//        System.out.println("La portion du salaire taxable à 45% est de " + fortyFivePercentPortion + " €.");
-//        System.out.println("Le montant de l'impot à 45% est de " + fortyFivePercentTaxeAmount + "€.");
-
-        if (isAnnualTaxableNetIncomeAfterReductionNegative) {
-            fortyOnePercentPortion = 0;
-//            System.out.println(errMsg);
-        } else if (annualTaxableNetIncomeAfterReduction > fortyOnePercentLimit) {
-            fortyOnePercentPortion = fortyOnePercentLimit - thirtyPercentLimit;
-        } else if (annualTaxableNetIncomeAfterReduction > thirtyPercentLimit) {
-            fortyOnePercentPortion = annualTaxableNetIncomeAfterReduction - thirtyPercentLimit;
-        } else {
-            fortyOnePercentPortion = 0;
-        }
-        fortyOnePercentTaxeAmount = fortyOnePercentPortion * fortyOnePercentRate;
-//        System.out.println("La portion du salaire taxable à 41% est de " + fortyOnePercentPortion + " €.");
-//        System.out.println("Le montant de l'impot à 41% est de " + fortyOnePercentTaxeAmount + " €.");
-
-        if (isAnnualTaxableNetIncomeAfterReductionNegative) {
-            thirtyPercentPortion = 0;
-//            System.out.println(errMsg);
-        } else if (annualTaxableNetIncomeAfterReduction > thirtyPercentLimit) {
-            thirtyPercentPortion = thirtyPercentLimit - elevenPercentLimit;
-        } else if (annualTaxableNetIncomeAfterReduction > elevenPercentLimit) {
-            thirtyPercentPortion = annualTaxableNetIncomeAfterReduction - elevenPercentLimit;
-        } else {
-            thirtyPercentPortion = 0;
-        }
-        thirtyPercentTaxeAmount = thirtyPercentPortion * thirtyPercentRate;
-//        System.out.println("La portion du salaire taxable à 30% est de " + thirtyPercentPortion + " €.");
-//        System.out.println("Le montant de l'impot à 30% est de " + thirtyPercentTaxeAmount + " €.");
-
-        if (isAnnualTaxableNetIncomeAfterReductionNegative) {
-            elevenPercentPortion = 0;
-//            System.out.println(errMsg);
-        } else if (annualTaxableNetIncomeAfterReduction > elevenPercentLimit) {
-            elevenPercentPortion = elevenPercentLimit - untaxableLimit;
-        } else if (annualTaxableNetIncomeAfterReduction > untaxableLimit) {
-            elevenPercentPortion = annualTaxableNetIncomeAfterReduction - untaxableLimit;
-        } else {
-            elevenPercentPortion = 0;
-        }
-        elevenPercentTaxeAmount = elevenPercentPortion * elevenPercentRate;
-//        System.out.println("La portion du salaire taxable à 11% est de " + elevenPercentPortion + " €.");
-//        System.out.println("Le montant de l'impôt à 11% est de " + elevenPercentTaxeAmount + " €.");
-
-        if (isAnnualTaxableNetIncomeAfterReductionNegative) {
-            untaxablePortion = 0;
-            System.out.println(errMsg);
-        } else if (annualTaxableNetIncomeAfterReduction > untaxableLimit) {
-            untaxablePortion = untaxableLimit;
-        } else if (annualTaxableNetIncomeAfterReduction >= 0) {
-            untaxablePortion = annualTaxableNetIncomeAfterReduction;
-        } else {
-            untaxablePortion = 0;
-        }
-        untaxableTaxeAmount = untaxablePortion * untaxablePercentRate;
-//        System.out.println("La portion du salaire non taxable est de " + untaxablePortion + " €.");
-//        System.out.println("Le montant de l'impôt à non taxable est de " + untaxableTaxeAmount + " €.");
-
-        if (isAnnualTaxableNetIncomeAfterReductionNegative) {
-        } else {
-            System.out.println("Le salaire annuel net avant impôt et après abattement de " + (reduction * 100) + "% est de : " + annualTaxableNetIncomeAfterReduction + " €.");
-        }
-
-        double totalTaxe;
-        if (isAnnualTaxableNetIncomeAfterReductionNegative) {
-            totalTaxe = 0;
-        } else {
-            totalTaxe = untaxableTaxeAmount + elevenPercentTaxeAmount + thirtyPercentTaxeAmount + fortyOnePercentTaxeAmount + fortyFivePercentTaxeAmount;
             System.out.println("Le montant total de l'impôt est de : " + totalTaxe + " €.");
-        }
 
-        double annualNetSalary;
-        if (isAnnualTaxableNetIncomeAfterReductionNegative) {
-            annualNetSalary = 0;
-        } else {
             annualNetSalary = annualTaxableNetIncomeAfterReduction - totalTaxe;
             System.out.println("Le salaire annuel net d'impôt est de " + annualNetSalary + " €.");
-        }
 
-        double effectiveTaxRate;
-        if (isAnnualTaxableNetIncomeAfterReductionNegative) {
-            effectiveTaxRate = 0;
-        } else {
             effectiveTaxRate = totalTaxe / annualTaxableNetIncomeAfterReduction;
             System.out.println("Le pourcentage d'imposition réel est de " + effectiveTaxRate * 100 + " %.");
         }
