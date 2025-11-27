@@ -57,7 +57,7 @@ public class FrenchRevenueTaxCalculator {
         boolean isAnnualTaxableNetIncomeAfterReductionNegative =
                 annualTaxableNetIncomeAfterReduction < 0;
 
-        if (!isAnnualTaxableNetIncomeAfterReductionNegative) {
+        if (isAnnualTaxableNetIncomeAfterReductionNegative == false) {
 
             if (annualTaxableNetIncomeAfterReduction > FORTY_ONE_PERCENT_LIMIT) {
                 fortyFivePercentPortion = annualTaxableNetIncomeAfterReduction - FORTY_ONE_PERCENT_LIMIT;
