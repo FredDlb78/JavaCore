@@ -10,22 +10,19 @@ public class CoinChangerV2 {
 
         if (totalBill < 0) {
             System.out.println("Le montant de la facture ne peut pas être négatif.");
-            return;
         } else if (totalBill == 0) {
             System.out.println("Vous n'avez rien à payer.");
-            return;
         } else {
             System.out.println("Le montant total de la facture est de " + totalBill + " €.");
         }
 
         if (amountPaid <= 0) {
             System.out.println("Le montant payé doit être positif.");
-            return;
         } else {
             System.out.println("Le montant que vous avez payé est de " + amountPaid + " €");
         }
 
-        int returnedAmount = amountPaid - totalBill; // Montant à rendre
+        int returnedAmount = amountPaid - totalBill;
 
         if (returnedAmount < 0) {
             System.out.println("Vous avez réglé " + amountPaid + " € sur un total de " + totalBill +
@@ -37,14 +34,14 @@ public class CoinChangerV2 {
         }
 
         // Valeurs des pièces et billets
-        int fiftyBill = 50;
-        int twentyBill = 20;
-        int tenBill = 10;
-        int twoCoin = 2;
-        int oneCoin = 1;
+        final int FIFTY_BILL = 50;
+        final int TWENTY_BILL = 20;
+        final int TEN_BILL = 10;
+        final int TWO_COIN = 2;
+        final int ONE_COIN = 1;
 
         // Stock disponible
-        int fitfyBillStock = 4;
+        int fitfyBillStock = 2;
         int twentyBillStock = 1;
         int tenBillStock = 10;
         int twoCoinStock = 30;
@@ -57,93 +54,84 @@ public class CoinChangerV2 {
         int twoCoinsToBeReturned = 0;
         int oneCoinsToBeReturned = 0;
 
-        // Montant restant à rendre (qu'on met à jour à chaque étape)
-        int remainingAmount = returnedAmount;
-
         // ---- Billets de 50 ----
-        int maxFiftyByValue = remainingAmount / fiftyBill; // théorique avec la valeur
-        if (fitfyBillStock <= 0) {
-            fiftyBillsToBeReturned = 0;
-            System.out.println("Pas de stock de billets de 50€.");
-        } else if (fitfyBillStock < maxFiftyByValue) {
+        fiftyBillsToBeReturned = returnedAmount / FIFTY_BILL;
+
+        if (fitfyBillStock < fiftyBillsToBeReturned) {
             fiftyBillsToBeReturned = fitfyBillStock;
-            System.out.println("Pas assez de billets de 50€. On utilise tout le stock disponible.");
+            returnedAmount -= (FIFTY_BILL * fiftyBillsToBeReturned);
+            System.out.println("Pas assez de stock de billets de 50.");
         } else {
-            fiftyBillsToBeReturned = maxFiftyByValue;
+            fiftyBillsToBeReturned = returnedAmount / FIFTY_BILL;
+            returnedAmount = returnedAmount % FIFTY_BILL;
         }
-        remainingAmount = remainingAmount - fiftyBillsToBeReturned * fiftyBill;
 
         // ---- Billets de 20 ----
-        int maxTwentyByValue = remainingAmount / twentyBill;
-        if (twentyBillStock <= 0) {
-            twentyBillsToBeReturned = 0;
-            System.out.println("Pas de stock de billets de 20€.");
-        } else if (twentyBillStock < maxTwentyByValue) {
+        twentyBillsToBeReturned = returnedAmount / TWENTY_BILL;
+
+        if (twentyBillStock < twentyBillsToBeReturned) {
             twentyBillsToBeReturned = twentyBillStock;
-            System.out.println("Pas assez de billets de 20€. On utilise tout le stock disponible.");
+            returnedAmount -= (TWENTY_BILL * twentyBillsToBeReturned);
         } else {
-            twentyBillsToBeReturned = maxTwentyByValue;
+            twentyBillsToBeReturned = returnedAmount / TWENTY_BILL;
+            returnedAmount = returnedAmount % TWENTY_BILL;
         }
-        remainingAmount = remainingAmount - twentyBillsToBeReturned * twentyBill;
+
+        amountPaid = returnedAmount;
 
         // ---- Billets de 10 ----
-        int maxTenByValue = remainingAmount / tenBill;
-        if (tenBillStock <= 0) {
-            tenBillsToBeReturned = 0;
-            System.out.println("Pas de stock de billets de 10€.");
-        } else if (tenBillStock < maxTenByValue) {
+        tenBillsToBeReturned = returnedAmount / TEN_BILL;
+
+        if (tenBillStock < tenBillsToBeReturned) {
             tenBillsToBeReturned = tenBillStock;
-            System.out.println("Pas assez de billets de 10€. On utilise tout le stock disponible.");
+            returnedAmount -= (TEN_BILL * tenBillsToBeReturned);
         } else {
-            tenBillsToBeReturned = maxTenByValue;
+            tenBillsToBeReturned = returnedAmount / TEN_BILL;
+            returnedAmount = returnedAmount % TEN_BILL;
         }
-        remainingAmount = remainingAmount - tenBillsToBeReturned * tenBill;
+
+        amountPaid = returnedAmount;
 
         // ---- Pièces de 2 ----
-        int maxTwoByValue = remainingAmount / twoCoin;
-        if (twoCoinStock <= 0) {
-            twoCoinsToBeReturned = 0;
-            System.out.println("Pas de stock de pièces de 2€.");
-        } else if (twoCoinStock < maxTwoByValue) {
+        twoCoinsToBeReturned = returnedAmount / TWO_COIN;
+
+        if (twoCoinStock < twoCoinsToBeReturned) {
             twoCoinsToBeReturned = twoCoinStock;
-            System.out.println("Pas assez de pièces de 2€. On utilise tout le stock disponible.");
+            returnedAmount -= (TWO_COIN * twoCoinsToBeReturned);
         } else {
-            twoCoinsToBeReturned = maxTwoByValue;
+            twoCoinsToBeReturned = returnedAmount / TWO_COIN;
+            returnedAmount = returnedAmount % TWO_COIN;
         }
-        remainingAmount = remainingAmount - twoCoinsToBeReturned * twoCoin;
+
+        amountPaid = returnedAmount;
 
         // ---- Pièces de 1 ----
-        int maxOneByValue = remainingAmount / oneCoin;
-        if (oneCoinStock <= 0) {
-            oneCoinsToBeReturned = 0;
-            System.out.println("Pas de stock de pièces de 1€.");
-        } else if (oneCoinStock < maxOneByValue) {
+        oneCoinsToBeReturned = returnedAmount / ONE_COIN;
+
+        if (oneCoinStock < oneCoinsToBeReturned) {
             oneCoinsToBeReturned = oneCoinStock;
-            System.out.println("Pas assez de pièces de 1€. On utilise tout le stock disponible.");
+            returnedAmount -= (ONE_COIN * oneCoinsToBeReturned);
         } else {
-            oneCoinsToBeReturned = maxOneByValue;
+            oneCoinsToBeReturned = returnedAmount / ONE_COIN;
+            returnedAmount = returnedAmount % ONE_COIN;
         }
-        remainingAmount = remainingAmount - oneCoinsToBeReturned * oneCoin;
 
+        // Total réellement rendu
         int totalReturned =
-                fiftyBillsToBeReturned * fiftyBill +
-                        twentyBillsToBeReturned * twentyBill +
-                        tenBillsToBeReturned * tenBill +
-                        twoCoinsToBeReturned * twoCoin +
-                        oneCoinsToBeReturned * oneCoin;
+                fiftyBillsToBeReturned * FIFTY_BILL +
+                        twentyBillsToBeReturned * TWENTY_BILL +
+                        tenBillsToBeReturned * TEN_BILL +
+                        twoCoinsToBeReturned * TWO_COIN +
+                        oneCoinsToBeReturned * ONE_COIN;
 
-        System.out.println("Monnaie rendue au total : " + totalReturned + "€");
+        System.out.println("Monnaie rendue : " + totalReturned);
 
-        if (remainingAmount > 0) {
-            System.out.println("Impossible de rendre exactement toute la monnaie. Il reste " + remainingAmount + "€ non rendus (manque de stock).");
-        }
-
-        // Résultat
+        // Résultat final
         System.out.println("Monnaie à rendre :");
-        System.out.println(fiftyBillsToBeReturned + " billet(s) de " + fiftyBill + "€");
-        System.out.println(twentyBillsToBeReturned + " billet(s) de " + twentyBill + "€");
-        System.out.println(tenBillsToBeReturned + " billet(s) de " + tenBill + "€");
-        System.out.println(twoCoinsToBeReturned + " pièce(s) de " + twoCoin + "€");
-        System.out.println(oneCoinsToBeReturned + " pièce(s) de " + oneCoin + "€");
+        System.out.println(fiftyBillsToBeReturned + " billet(s) de " + FIFTY_BILL + "€");
+        System.out.println(twentyBillsToBeReturned + " billet(s) de " + TWENTY_BILL + "€");
+        System.out.println(tenBillsToBeReturned + " billet(s) de " + TEN_BILL + "€");
+        System.out.println(twoCoinsToBeReturned + " pièce(s) de " + TWO_COIN + "€");
+        System.out.println(oneCoinsToBeReturned + " pièce(s) de " + ONE_COIN + "€");
     }
 }
