@@ -4,29 +4,40 @@ public class ObfuscatedCodeV1 {
 
     public static void main(String[] args) {
 
-        int b = 1; // Type de véhicule (1 = XXX, 2 = YYY, 3 = ZZZ)
+        String vehiculeType = "voiture"; // Type de véhicule (1 = voiture, 2 = bus, 3 = camion)
 
-        double a = 100; // Distance
+        double distanceToTravel = 100; // en km
 
-        boolean e = true;
-        double d = 0.03;
+        double fuelConsumptionPerKm = 0;
+        final double CAR_FUEL_CONSUMPTION_PER_KM = 0.10; // en euros
+        final double BUS_FUEL_CONSUMPTION_PER_KM = 0.20; // en euros
+        final double TRUCK_FUEL_CONSUMPTION_PER_KM = 0.35; // en euros
 
-        double c = 0;
+        boolean isActiveFuelPromotion = true;
+        double fuelPromotionRate = 0.03;
 
-        if (b == 1) {
-            c = a * 0.10;
+        double travelPrice = 0; // en euros
+
+        if (vehiculeType.equals("voiture")) {
+            fuelConsumptionPerKm = CAR_FUEL_CONSUMPTION_PER_KM;
         }
-        if (b == 2) {
-            c = a * 0.20;
+        if (vehiculeType.equals("bus")) {
+            fuelConsumptionPerKm = BUS_FUEL_CONSUMPTION_PER_KM;
+            travelPrice = distanceToTravel * fuelConsumptionPerKm;
         }
-        if (b == 3) {
-            c = a * 0.35;
-        }
-        if (e) {
-            c = c - (a * d);
+        if (vehiculeType.equals("camion")) {
+            fuelConsumptionPerKm = TRUCK_FUEL_CONSUMPTION_PER_KM;
+            travelPrice = distanceToTravel * fuelConsumptionPerKm;
         }
 
-        System.out.println("___________ : " + c + "€");
+        travelPrice = distanceToTravel * fuelConsumptionPerKm;
 
+        if (isActiveFuelPromotion) {
+            double savings = distanceToTravel * fuelPromotionRate;
+            travelPrice -= (savings);
+            System.out.println("Promotion de " + (fuelPromotionRate * 100) + "% sur le carburant, celle-ci vous permet une économie de " + savings + " euros.");
+        }
+
+        System.out.println("Un trajet de " + distanceToTravel + " km en " + vehiculeType + " coutera " + travelPrice + " €.");
     }
 }
