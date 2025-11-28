@@ -36,7 +36,5 @@ public class SmartHomeSecurity {
             System.out.println("L'alarme n'est pas activée");
             System.out.println(safeModeNotActivatedMsg);
         }
-
-
     }
 }
