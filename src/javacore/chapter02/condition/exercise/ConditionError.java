@@ -5,9 +5,9 @@ public class ConditionError {
 
     public static void main(String[] args) {
 
-        int age = 99;
+        int age = 101;
 
-        if (age >= 100) {
+/*        if (age >= 100) {
             System.out.println("Vous êtes une exception dans ce monde !");
         } else if(age > 60 && age < 100) {
             System.out.println("Vous n'êtes plus tout jeune.");
@@ -19,7 +19,7 @@ public class ConditionError {
             System.out.println("Vous êtes bientôt majeur !");
         } else {
             System.out.println("Vous êtes mineur.");
-        }
+        }*/
 
 /*
         Les 2 erreurs commises ici sont:
@@ -42,10 +42,10 @@ public class ConditionError {
         else if(age == 18) {
             System.out.println("Vous êtes majeur.");
         }
-        else if(age > 18 && age <= 60) {
+        else if(age <= 60) {
             System.out.println("Vous êtes un adulte.");
         }
-        else if(age > 60 && age < 100) {
+        else if(age < 100) {
             System.out.println("Vous n'êtes plus tout jeune.");
         }
         else {

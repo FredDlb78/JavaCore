@@ -8,7 +8,7 @@ public class MaxOfThree {
         int b = 5;
         int c = 6;
 
-        if (a == b && a == c) {
+        if (a == b && b == c) {
             System.err.println("Toutes les valeurs sont égales, il n'y en a pas une plus grande que les autres. Valeur des variables: " + a);
         } else if (a == b) {
             System.err.println("Les valeurs de a et b sont égales. Valeur de a et b : " + a);
@@ -25,7 +25,5 @@ public class MaxOfThree {
         } else {
             System.err.println( "Ceci est un cas auquel je n'ai pas pensé :) .");
         }
-
     }
-
 }

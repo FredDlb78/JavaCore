@@ -22,15 +22,15 @@ public class CoinChangerV2 {
             System.out.println("Le montant que vous avez payé est de " + amountPaid + " €");
         }
 
-        int returnedAmount = amountPaid - totalBill;
+        int amountToBeReturned = amountPaid - totalBill;
 
-        if (returnedAmount < 0) {
+        if (amountToBeReturned < 0) {
             System.out.println("Vous avez réglé " + amountPaid + " € sur un total de " + totalBill +
-                    " €. Vous devez encore régler " + (-returnedAmount) + " €.");
-        } else if (returnedAmount == 0) {
+                    " €. Vous devez encore régler " + (-amountToBeReturned) + " €.");
+        } else if (amountToBeReturned == 0) {
             System.out.println("Vous avez payé le montant exact. Aucune monnaie à rendre.");
         } else {
-            System.out.println("Montant à rendre : " + returnedAmount + "€");
+            System.out.println("Montant à rendre : " + amountToBeReturned + "€");
         }
 
         // Valeurs des pièces et billets
@@ -55,65 +55,65 @@ public class CoinChangerV2 {
         int oneCoinsToBeReturned = 0;
 
         // ---- Billets de 50 ----
-        fiftyBillsToBeReturned = returnedAmount / FIFTY_BILL;
+        fiftyBillsToBeReturned = amountToBeReturned / FIFTY_BILL;
 
         if (fitfyBillStock < fiftyBillsToBeReturned) {
             fiftyBillsToBeReturned = fitfyBillStock;
-            returnedAmount -= (FIFTY_BILL * fiftyBillsToBeReturned);
-            System.out.println("Pas assez de stock de billets de 50.");
+            amountToBeReturned -= (FIFTY_BILL * fiftyBillsToBeReturned);
+            //System.out.println("Pas assez de stock de billets de 50.");
         } else {
-            fiftyBillsToBeReturned = returnedAmount / FIFTY_BILL;
-            returnedAmount = returnedAmount % FIFTY_BILL;
+            fiftyBillsToBeReturned = amountToBeReturned / FIFTY_BILL;
+            amountToBeReturned = amountToBeReturned % FIFTY_BILL;
         }
 
         // ---- Billets de 20 ----
-        twentyBillsToBeReturned = returnedAmount / TWENTY_BILL;
+        twentyBillsToBeReturned = amountToBeReturned / TWENTY_BILL;
 
         if (twentyBillStock < twentyBillsToBeReturned) {
             twentyBillsToBeReturned = twentyBillStock;
-            returnedAmount -= (TWENTY_BILL * twentyBillsToBeReturned);
+            amountToBeReturned -= (TWENTY_BILL * twentyBillsToBeReturned);
         } else {
-            twentyBillsToBeReturned = returnedAmount / TWENTY_BILL;
-            returnedAmount = returnedAmount % TWENTY_BILL;
+            twentyBillsToBeReturned = amountToBeReturned / TWENTY_BILL;
+            amountToBeReturned = amountToBeReturned % TWENTY_BILL;
         }
 
-        amountPaid = returnedAmount;
+        amountPaid = amountToBeReturned;
 
         // ---- Billets de 10 ----
-        tenBillsToBeReturned = returnedAmount / TEN_BILL;
+        tenBillsToBeReturned = amountToBeReturned / TEN_BILL;
 
         if (tenBillStock < tenBillsToBeReturned) {
             tenBillsToBeReturned = tenBillStock;
-            returnedAmount -= (TEN_BILL * tenBillsToBeReturned);
+            amountToBeReturned -= (TEN_BILL * tenBillsToBeReturned);
         } else {
-            tenBillsToBeReturned = returnedAmount / TEN_BILL;
-            returnedAmount = returnedAmount % TEN_BILL;
+            tenBillsToBeReturned = amountToBeReturned / TEN_BILL;
+            amountToBeReturned = amountToBeReturned % TEN_BILL;
         }
 
-        amountPaid = returnedAmount;
+        amountPaid = amountToBeReturned;
 
         // ---- Pièces de 2 ----
-        twoCoinsToBeReturned = returnedAmount / TWO_COIN;
+        twoCoinsToBeReturned = amountToBeReturned / TWO_COIN;
 
         if (twoCoinStock < twoCoinsToBeReturned) {
             twoCoinsToBeReturned = twoCoinStock;
-            returnedAmount -= (TWO_COIN * twoCoinsToBeReturned);
+            amountToBeReturned -= (TWO_COIN * twoCoinsToBeReturned);
         } else {
-            twoCoinsToBeReturned = returnedAmount / TWO_COIN;
-            returnedAmount = returnedAmount % TWO_COIN;
+            twoCoinsToBeReturned = amountToBeReturned / TWO_COIN;
+            amountToBeReturned = amountToBeReturned % TWO_COIN;
         }
 
-        amountPaid = returnedAmount;
+        amountPaid = amountToBeReturned;
 
         // ---- Pièces de 1 ----
-        oneCoinsToBeReturned = returnedAmount / ONE_COIN;
+        oneCoinsToBeReturned = amountToBeReturned / ONE_COIN;
 
         if (oneCoinStock < oneCoinsToBeReturned) {
             oneCoinsToBeReturned = oneCoinStock;
-            returnedAmount -= (ONE_COIN * oneCoinsToBeReturned);
+            amountToBeReturned -= (ONE_COIN * oneCoinsToBeReturned);
         } else {
-            oneCoinsToBeReturned = returnedAmount / ONE_COIN;
-            returnedAmount = returnedAmount % ONE_COIN;
+            oneCoinsToBeReturned = amountToBeReturned / ONE_COIN;
+            amountToBeReturned = amountToBeReturned % ONE_COIN;
         }
 
         // Total réellement rendu
