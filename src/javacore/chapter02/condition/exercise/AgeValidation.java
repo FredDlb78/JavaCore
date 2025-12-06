@@ -62,7 +62,7 @@ public class AgeValidation {
         final int DAYS_IN_18_YEAR = DAYS_IN_1_YEAR * 18;
 
         final int DAYS_IN_JANUARY   = 31;
-        final int DAYS_IN_FEBRUARY  = 28;
+        int DAYS_IN_FEBRUARY  = 28; // BONUS 2 : initialisé à 28 et va être impactée par les années bissextiles
         final int DAYS_IN_MARCH     = 31;
         final int DAYS_IN_APRIL     = 30;
         final int DAYS_IN_MAY       = 31;
@@ -73,6 +73,10 @@ public class AgeValidation {
         final int DAYS_IN_OCTOBER   = 31;
         final int DAYS_IN_NOVEMBER  = 30;
         final int DAYS_IN_DECEMBER  = 31;
+
+        // BONUS 2 : Calculs des années bissextiles
+        boolean isBirthdayYearLeap = (birthdayYear % 400 == 0) || (birthdayYear % 4 == 0 && birthdayYear % 100 != 0); // BONUS 2
+        boolean isCurrentYearLeap = (currentYear % 400 == 0) || (currentYear % 4 == 0 && currentYear % 100 != 0);   // BONUS 2
 
         // Années complètes entre l'année de naissance et l'année en cours
         int userCompleteYears = currentYear - birthdayYear - 1;
@@ -128,6 +132,11 @@ public class AgeValidation {
             birthdayYearInDays = (DAYS_IN_DECEMBER - birthdayDay);
         }
 
+        // BONUS 2 : Si l'année de naissance est bissextile et que l'anniversaire est en janvier ou février, il reste un jour de plus dans l'année de naissance après l'anniversaire.
+        if (isBirthdayYearLeap && birthdayMonth <= 2) {
+            birthdayYearInDays = birthdayYearInDays + 1;
+        }
+
         // Jours écoulés dans l'année courante jusqu'à aujourd'hui
         if (currentMonth == 1) {
             currentYearInDays = currentDay;
@@ -153,6 +162,11 @@ public class AgeValidation {
             currentYearInDays = DAYS_IN_JANUARY + DAYS_IN_FEBRUARY + DAYS_IN_MARCH + DAYS_IN_APRIL + DAYS_IN_MAY + DAYS_IN_JUNE + DAYS_IN_JULY + DAYS_IN_AUGUST + DAYS_IN_SEPTEMBER + DAYS_IN_OCTOBER + currentDay;
         } else if (currentMonth == 12) {
             currentYearInDays = DAYS_IN_JANUARY + DAYS_IN_FEBRUARY + DAYS_IN_MARCH + DAYS_IN_APRIL + DAYS_IN_MAY + DAYS_IN_JUNE + DAYS_IN_JULY + DAYS_IN_AUGUST + DAYS_IN_SEPTEMBER + DAYS_IN_OCTOBER + DAYS_IN_NOVEMBER + currentDay;
+        }
+
+        // BONUS 2 : Si l'année courante est bissextile et que nous sommes après février, on ajoute un jour.
+        if (isCurrentYearLeap && currentMonth > 2) {
+            currentYearInDays = currentYearInDays + 1;
         }
 
         int userAgeInDays = userCompleteYearsInDays + birthdayYearInDays + currentYearInDays;
