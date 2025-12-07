@@ -7,7 +7,7 @@ public class CoinChangerV3 {
 
         // -1, 0, 1, 2, 3, 12, 13, 32, 33, 82, 83
         int totalBill = 100;      // montant de la facture
-        int amountPaid = 119;    // montant payé
+        int amountPaid = 90;    // montant payé
 
         if (totalBill < 0) {
             System.out.println("Le montant de la facture ne peut pas être négatif.");
@@ -41,71 +41,55 @@ public class CoinChangerV3 {
         final int TWO_COIN = 2;
         final int ONE_COIN = 1;
 
-        // Nombre de billets/pièces à rendre
-        int fiftyBillsToBeReturned = 0;
-        int twentyBillsToBeReturned = 0;
-        int tenBillsToBeReturned = 0;
-        int twoCoinsToBeReturned = 0;
-        int oneCoinsToBeReturned = 0;
-
-        int change = 0;
-        int changeToBeReturned = 0;
-        if (changeToBeReturned < 0) {
-            changeToBeReturned = 0;
-        }
         int i = 0;
+        int numberOfChangeToBeReturned = 0;
+        //int change = 0;
 
+
+        // Billets de 50
         if (amountToBeReturned >= FIFTY_BILL) {
-            change = FIFTY_BILL;
-            changeToBeReturned = fiftyBillsToBeReturned;
-            for (i = 1; change * i <= amountToBeReturned; i++) {
+            for (i = 1; FIFTY_BILL * i <= amountToBeReturned; i++) {
             }
+            numberOfChangeToBeReturned = i - 1;
+            System.out.println(numberOfChangeToBeReturned + " billet(s) de " + FIFTY_BILL + "€.");
+            amountToBeReturned -= numberOfChangeToBeReturned * FIFTY_BILL;
         }
 
-        changeToBeReturned = i - 1;
-        System.out.println(changeToBeReturned + " billet(s) de " + change + "€");
-        amountToBeReturned -=  changeToBeReturned * change;
-        //System.out.println("Le montant restant à rembourser est de " + amountToBeReturned + "€.");
+        // Billets de 20
         if (amountToBeReturned >= TWENTY_BILL) {
-            change = TWENTY_BILL;
-            changeToBeReturned = twentyBillsToBeReturned;
+            for (i = 1; TWENTY_BILL * i <= amountToBeReturned; i++) {
+            }
+            numberOfChangeToBeReturned = i - 1;
+            System.out.println(numberOfChangeToBeReturned + " billet(s) de " + TWENTY_BILL + "€.");
+            amountToBeReturned -= numberOfChangeToBeReturned * TWENTY_BILL;
         }
-        for (i = 1; change * i <= amountToBeReturned; i++) {
-        }
-        changeToBeReturned = i - 1;
-        System.out.println(changeToBeReturned + " billet(s) de " + change + "€");
-        amountToBeReturned -=  changeToBeReturned * change;
-        //System.out.println("Le montant restant à rembourser est de " + amountToBeReturned + "€.");
+
+        // Billets de 10
         if (amountToBeReturned >= TEN_BILL) {
-            change = TEN_BILL;
-            changeToBeReturned = tenBillsToBeReturned;
+            for (i = 1; TEN_BILL * i <= amountToBeReturned; i++) {
+            }
+            numberOfChangeToBeReturned = i - 1;
+            System.out.println(numberOfChangeToBeReturned + " billet(s) de " + TEN_BILL + "€.");
+            amountToBeReturned -= numberOfChangeToBeReturned * TEN_BILL;
         }
-        for (i = 1; change * i <= amountToBeReturned; i++) {
-        }
-        changeToBeReturned = i - 1;
-        System.out.println(changeToBeReturned + " billet(s) de " + change + "€");
-        amountToBeReturned -=  changeToBeReturned * change;
-        //System.out.println("Le montant restant à rembourser est de " + amountToBeReturned + "€.");
+
+        // Pièces de 2
         if (amountToBeReturned >= TWO_COIN) {
-            change = TWO_COIN;
-            changeToBeReturned = twoCoinsToBeReturned;
+            for (i = 1; TWO_COIN * i <= amountToBeReturned; i++) {
+            }
+            numberOfChangeToBeReturned = i - 1;
+            System.out.println(numberOfChangeToBeReturned + " pièce(s) de " + TWO_COIN + "€.");
+            amountToBeReturned -= numberOfChangeToBeReturned * TWO_COIN;
         }
-        for (i = 1; change * i <= amountToBeReturned; i++) {
-        }
-        changeToBeReturned = i - 1;
-        System.out.println(changeToBeReturned + " billet(s) de " + change + "€");
-        amountToBeReturned -=  changeToBeReturned * change;
-        //System.out.println("Le montant restant à rembourser est de " + amountToBeReturned + "€.");
+
+        // Pièces de 1
         if (amountToBeReturned >= ONE_COIN) {
-            change = ONE_COIN;
-            changeToBeReturned = oneCoinsToBeReturned;
+            numberOfChangeToBeReturned =  1;
+            System.out.println(numberOfChangeToBeReturned + " pièce(s) de " + ONE_COIN + "€.");
         }
-        for (i = 1; change * i <= amountToBeReturned; i++) {
-        }
-        changeToBeReturned = i - 1;
-        System.out.println(changeToBeReturned + " billet(s) de " + change + "€");
-        amountToBeReturned -=  changeToBeReturned * change;
-        //System.out.println("Le montant restant à rembourser est de " + amountToBeReturned + "€.");
+
+        // J'aurai souhaité faire une boucle pour éviter de répéter ces conditions mais j'ai l'impression
+        // que ce n'est pas faisable tant qu'on a pas vu les listes;
 
     }
 }
