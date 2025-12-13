@@ -4,8 +4,9 @@ public class FactorialCalculator {
 
     public static void main(String[] args) {
 
-        long number = 0;
+        long number = 20;
         long result = 1;
+        long originalNumber = number;
 
 /*        if (number > 0) {
             while (number >= 1) {
@@ -24,17 +25,16 @@ public class FactorialCalculator {
 
         if (number < 0) {
             System.out.println("Le factoriel d'un nombre négatif n'existe pas. Nombre: " + number);
+        } else if (number == 0) {
+            result = 1;
+
         } else {
-            if (number == 0) {
+            while (number >= 1) {
                 result *= number;
-            } else {
-                while (number >= 1) {
-                    result *= number;
-                    number--;
-                }
+                number--;
             }
-            System.out.println("Le factoriel est : " + result);
         }
+        System.out.println("Le factoriel de " + originalNumber + " est " + result + ".");
 
 /*          7 => 5040
             9 => 362880
@@ -45,5 +45,4 @@ public class FactorialCalculator {
             A partir de 21, on obtient un résultat négatif, j'imagine parce qu'on dépasse la limite tu type long.
                 */
     }
-
 }

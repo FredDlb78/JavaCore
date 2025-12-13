@@ -37,7 +37,7 @@ public class ForLoopExample {
             System.out.println("Le factoriel d'un nombre négatif n'existe pas. Nombre: " + number);
         } else {
             if (number == 0) {
-                result *= number;
+                result = 1;
             } else {
                 for (int i = 1; i <= number; i++) {
                     result *= i;

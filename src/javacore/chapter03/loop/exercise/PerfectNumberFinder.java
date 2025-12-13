@@ -8,17 +8,17 @@ public class PerfectNumberFinder {
         int start = 1;
         int end = 100;
 
-        for (int i = start; i <= end; i++) {
-            //System.out.println("Boucle qui parcourt les nombres de : " + start + " à " + end + " . Nombre : " + i);
+        for (int potentialPerfectNumber = start; potentialPerfectNumber <= end; potentialPerfectNumber++) {
+            //System.out.println("Boucle qui parcourt les nombres de : " + start + " à " + end + " . Nombre : " + potentialPerfectNumber);
             int sum = 0;
-            for (int divisor = 1; divisor < i; divisor++) {
-                // Si le diviseur est un diviseur de i => on l’ajoute à la somme
-                if (i % divisor == 0) {
-                    sum += divisor;
+            for (int potentialDivisor = 1; potentialDivisor < potentialPerfectNumber; potentialDivisor++) {
+                // Si le diviseur est un diviseur de potentialPerfectNumber => on l’ajoute à la somme
+                if (potentialPerfectNumber % potentialDivisor == 0) {
+                    sum += potentialDivisor;
                 }
             }
-            if (sum == i) {
-                System.out.println(i + " est un nombre parfait !");
+            if (sum == potentialPerfectNumber) {
+                System.out.println(potentialPerfectNumber + " est un nombre parfait !");
             }
         }
         // Les nombres parfaits jusqu'à 10000 sont: 6, 28, 496, 8128

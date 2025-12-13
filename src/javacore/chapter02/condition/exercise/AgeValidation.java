@@ -25,7 +25,7 @@ public class AgeValidation {
 
         // Cas à tester : jours  au dessus de 31 et en dessous de 1, mois au dessus de 12 et en dessous de 1. 18 ans aujourd'hui, 18 ans demain et 18 ans hier
 
-        int birthdayDay = 8;
+        int birthdayDay = 12;
         int birthdayMonth = 12;
         int birthdayYear = 2007;
 
@@ -58,7 +58,7 @@ public class AgeValidation {
 
         // BONUS 1
 
-        final int DAYS_IN_1_YEAR = 365;
+/*        final int DAYS_IN_1_YEAR = 365;
         final int DAYS_IN_18_YEAR = DAYS_IN_1_YEAR * 18;
 
         final int DAYS_IN_JANUARY   = 31;
@@ -177,6 +177,21 @@ public class AgeValidation {
             System.out.println("Vous êtes mineur.");
             int remainingDaysToBeMajor = DAYS_IN_18_YEAR - userAgeInDays;
             System.out.println("Vous serez majeur dans " + remainingDaysToBeMajor + " jours.");
+        }*/
+
+        final int MAJORITY_IN_YEARS = 18;
+
+        int thresholdYear = currentYear - MAJORITY_IN_YEARS;
+
+        boolean isMajor =
+                        (birthdayYear < thresholdYear) ||
+                        (birthdayYear == thresholdYear && birthdayMonth < currentMonth) ||
+                        (birthdayYear == thresholdYear && birthdayMonth == currentMonth && birthdayDay <= currentDay);
+
+        if (isMajor) {
+            System.out.println("Vous êtes majeur.");
+        } else {
+            System.out.println("Vous êtes mineur.");
         }
     }
 }

@@ -1,37 +1,37 @@
 package javacore.chapter03.loop.exercise;
 
-import java.util.Arrays;
-
 public class PrimeNumberSearcherV1 {
 
     public static void main(String[] args) {
 
 
         int number = 100;
-        int divisor = 2;
-        int i = 0;
-        int numberOfPrimeMembers = 0;
-        int numberOfPrimeMembersExpected = 50;
+        int potentialDivisor = 2;
+        int potentialPrimeNumber = 0;
+        int foundPrimeNumber = 0;
+        int searchAmount = 50;
 
-        for (i = 1; i <= number; i++) {
-            //System.out.println("Le nombre testé est : " + i);
-            for (divisor = 2; i % divisor != 0; divisor++) {
-                //System.out.println(divisor + " n'est pas le plus petit diviseur de " + number + ".");
-            }
-            //System.out.println("Le plus petit diviseur de " + i + " est : " + divisor + ".");
+        for (potentialPrimeNumber = 1; potentialPrimeNumber <= number; potentialPrimeNumber++) {
+            //System.out.println("Le nombre testé est : " + potentialPrimeNumber);
 
-            if (i == divisor) {
-                System.out.println(i + " est un nombre premier.");
-                numberOfPrimeMembers++;
+            for (potentialDivisor = 2; potentialPrimeNumber % potentialDivisor != 0; potentialDivisor++) {
+                //System.out.println(potentialDivisor + " n'est pas le plus petit diviseur de " + number + ".");
             }
+            //System.out.println("Le plus petit diviseur de " + potentialPrimeNumber + " est : " + potentialDivisor + ".");
+            boolean isPrime = false; // par défaut
+
+            if (potentialPrimeNumber == potentialDivisor) {
+                isPrime = true;
+                System.out.println(potentialPrimeNumber + " est un nombre premier.");
+                foundPrimeNumber++;
+            }
+
         }
-        System.out.println("Il y'a " + numberOfPrimeMembers + " nombres premiers entre 1 et " + number + ".");
+        System.out.println("Il y'a " + foundPrimeNumber + " nombres premiers entre 1 et " + number + ".");
         // Il y'a 25 nombres premiers entre 1 et 100.
         // Il faut aller jusqu'à 229 pour trouver les 50 nombres premiers.
 
-
-
-        // --------- BONUS 2 ---------
+/*        // --------- BONUS 2 ---------
         System.out.println("-----BONUS 2-----");
 
         int max = 100;
@@ -64,6 +64,6 @@ public class PrimeNumberSearcherV1 {
             }
         }
 
-        System.out.println("Il y a " + count + " nombres premiers entre 2 et " + max + ".");
+        System.out.println("Il y a " + count + " nombres premiers entre 2 et " + max + ".");*/
     }
 }
