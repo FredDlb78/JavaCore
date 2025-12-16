@@ -10,14 +10,10 @@ public class ChessboardDrawing {
         char space = ' ';
         char dot = '.';
 
-        for (int row = 1; row <= numberOfRows; row++) {
+        for (int currentRow = 1; currentRow <= numberOfRows; currentRow++) {
 
-            for (int column = 1; column <= numberOfColumns; column++) {
-                if (row % 2 == column % 2) {
-                    System.out.print(sharp);
-                } else {
-                    System.out.print(dot);
-                }
+            for (int currentColumn = 1; currentColumn <= numberOfColumns; currentColumn++) {
+                System.out.print(currentRow % 2 == currentColumn % 2 ? sharp : dot);
                 System.out.print(space);
             }
             System.out.println();

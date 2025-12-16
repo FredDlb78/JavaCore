@@ -26,10 +26,10 @@ public class BasicStopwatch {
             i++;
             seconds++;
 
-            if (seconds % 60 == 0) {
+            if (seconds % 60 <= 0) {
                 minuts += 1;
                 seconds = 0;
-                if (minuts % 60 == 0) {
+                if (minuts % 60 <= 0) {
                     hours += 1;
                     minuts = 0;
                 }

@@ -6,18 +6,18 @@ public class FibonacciCalculator {
         // Suite: 0 1 1 2 3 5 8 13 21
 
         long previousFibonacciNumber = 0;
-        long fibonacciNumber = 1;
+        long currentFibonacciNumber = 1;
         long result;
 
         System.out.println("-----");
         System.out.println("---Implémentez le programme qui calculera et affichera les 50 premiers termes de la suite de Fibonacci.---");
         System.out.println("-----");
 
-        for (int count = 0; count < 50; count++) {
+        for (int fibonacciTerm = 0; fibonacciTerm < 50; fibonacciTerm++) {
             System.out.println(previousFibonacciNumber);
-            result = fibonacciNumber + previousFibonacciNumber;
-            previousFibonacciNumber = fibonacciNumber;
-            fibonacciNumber = result;
+            result = currentFibonacciNumber + previousFibonacciNumber;
+            previousFibonacciNumber = currentFibonacciNumber;
+            currentFibonacciNumber = result;
         }
 
         System.out.println("-----");
@@ -35,9 +35,9 @@ public class FibonacciCalculator {
             else {
                 System.out.println("Nombre impair de la suite de Fibonacci : " + previousFibonacciNumber);
             }
-                result = fibonacciNumber + previousFibonacciNumber;
-                previousFibonacciNumber = fibonacciNumber;
-                fibonacciNumber = result;
+                result = currentFibonacciNumber + previousFibonacciNumber;
+                previousFibonacciNumber = currentFibonacciNumber;
+                currentFibonacciNumber = result;
 
         }
         System.out.println("Il y'a " + sumOfPairsFibonacciNumbers + " nombres pairs dans la suite de Fibanacci parmi les " + (count - 1) + " premiers.");
