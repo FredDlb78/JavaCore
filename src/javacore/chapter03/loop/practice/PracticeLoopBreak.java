@@ -1,8 +1,19 @@
-package javacore.chapter03.loop.exercise;
+package javacore.chapter03.loop.practice;
 
-public class PrimeNumberSearcherV1 {
+public class PracticeLoopBreak {
 
     public static void main(String[] args) {
+
+
+/*        while (true) {
+
+
+            for (int i = 0; i <10 ; i++) {
+                System.out.println(i);
+                break;
+            }
+            break;
+        }*/
 
         int potentialPrimeNumber = 0;
         int primeNumberFound = 0;
@@ -18,6 +29,7 @@ public class PrimeNumberSearcherV1 {
 
                 if (potentialPrimeNumber % potentialDivisor == 0) {
                     isCurrentNumberPrime = false;
+                    break;
                 }
             }
 
