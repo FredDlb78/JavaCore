@@ -17,10 +17,10 @@ public class FactorizationExercise {
         displayMultiplicationTable(6);
 
         // Afficher les carrés des nombres de 1 à 5
-        displaySquareOfNumber(1, 5);
+        displaySquareOfNumbers(1, 5);
 
         // Afficher les carrés des nombres de 6 à 10
-        displaySquareOfNumber(6, 10);
+        displaySquareOfNumbers(6, 10);
 
     }
 
@@ -37,7 +37,7 @@ public class FactorizationExercise {
         }
     }
 
-    public static void displaySquareOfNumber(int firstNumber, int lastNumber) {
+    public static void displaySquareOfNumbers(int firstNumber, int lastNumber) {
         System.out.println("Carrés des nombres de " + firstNumber + " à " + lastNumber + " :");
         for (int i = firstNumber; i <= lastNumber; i++) {
             System.out.println(i + " au carré = " + (i * i));
