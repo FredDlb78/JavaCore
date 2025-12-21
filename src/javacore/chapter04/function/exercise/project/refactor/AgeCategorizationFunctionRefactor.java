@@ -1,4 +1,4 @@
-package javacore.chapter04.function.exercise.projet.refactor;
+package javacore.chapter04.function.exercise.project.refactor;
 
 public class AgeCategorizationFunctionRefactor {
 
