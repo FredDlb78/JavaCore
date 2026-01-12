@@ -33,7 +33,7 @@ public class FactorizationExercise {
     public static void displayMultiplicationTable(int multiple) {
         System.out.println("Table de multiplication de " + multiple + " :");
         for (int i = 1; i <= 10; i++) {
-            System.out.println(+ multiple + " x " + i + " = " + (multiple * i));
+            System.out.println(multiple + " x " + i + " = " + (multiple * i));
         }
     }
 

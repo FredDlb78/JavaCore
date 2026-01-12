@@ -2,6 +2,9 @@ package javacore.chapter04.function.exercise.project.refactor;
 
 public class FrenchRevenueTaxCalculatorFunctionRefactor {
 
+    static final double WORKER_SOCIAL_CONTRIBUTIONS_RATE = 0.23;
+    static final double MANAGER_SOCIAL_CONTRIBUTIONS_RATE = 0.25;
+
     // Constante d'abattement (classique : visible partout)
     public static final double REDUCTION = 10.0 / 100;
 
@@ -10,17 +13,17 @@ public class FrenchRevenueTaxCalculatorFunctionRefactor {
         // -1, 0, 11294, 11295, 28797, 28798, 82341, 83342, 177106, 177107
         double annualBrutSalary = 45000;
 
-        final double UNTAXABLE_LIMIT = 11294.0;          // 0 %
-        final double ELEVEN_PERCENT_LIMIT = 28797.0;     // 11 %
-        final double THIRTY_PERCENT_LIMIT = 82341.0;     // 30 %
-        final double FORTY_ONE_PERCENT_LIMIT = 177106.0; // 41 %
+        final double FIRST_BRACKET_TAXABLE_LIMIT = 11294.0;          // 0 %
+        final double SECOND_BRACKET_TAXABLE_LIMIT = 28797.0;     // 11 %
+        final double THIRD_BRACKET_TAXABLE_LIMIT = 82341.0;     // 30 %
+        final double FOURTH_BRACKET_TAXABLE_LIMIT = 177106.0; // 41 %
         // 45% au-dessus
 
-        final double UNTAXABLE_PERCENT_RATE = 0.0;
-        final double ELEVEN_PERCENT_RATE = 0.11;
-        final double THIRTY_PERCENT_RATE = 0.30;
-        final double FORTY_ONE_PERCENT_RATE = 0.41;
-        final double FORTY_FIVE_PERCENT_RATE = 0.45;
+        final double FIRST_BRACKET_TAXABLE_RATE = 0.0;
+        final double SECOND_BRACKET_TAXABLE_RATE = 0.11;
+        final double THIRD_BRACKET_TAXABLE_RATE = 0.30;
+        final double FOURTH_BRACKET_TAXABLE_RATE = 0.41;
+        final double FIFTH_BRACKET_TAXABLE_RATE = 0.45;
 
         String status = "ouvrier"; // ou "cadre"
 
@@ -33,36 +36,35 @@ public class FrenchRevenueTaxCalculatorFunctionRefactor {
         double socialContributionsRate = getSocialContributionsRateByStatus(status);
 
         // Salaire net imposable (avant abattement)
-        displayAnnualTaxableNetSalary(status, socialContributionsRate, annualBrutSalary);
+        System.out.println("Le salaire net imposable d'un " + status + " avant l'abattement est " + getAnnualTaxableNetSalary(status, socialContributionsRate, annualBrutSalary)
+                + "€ pour un taux de " + (socialContributionsRate * 100) + "% et un salaire brut de " + annualBrutSalary + "€.");
 
         // Salaire net imposable après abattement
         double annualTaxableNetIncomeAfterReduction = calculateAnnualTaxableNetIncomeAfterReduction(annualBrutSalary, status);
-        displayAnnualTaxableNetIncomeAfterReduction(annualTaxableNetIncomeAfterReduction);
+        System.out.println("Le salaire net annuel imposable après réduction est de : " + annualTaxableNetIncomeAfterReduction);
 
 
         // Calcul des portions par tranche
-        double fortyFivePercentPortion = calculatePortionAboveLimit(annualTaxableNetIncomeAfterReduction, FORTY_ONE_PERCENT_LIMIT);
+        double fifthBracketPortion = calculatePortionBetweenLimits(annualTaxableNetIncomeAfterReduction, FOURTH_BRACKET_TAXABLE_LIMIT, Double.POSITIVE_INFINITY); // J'ai trouvé ça avec l'IA, je ne savais pas comment représenter l'infini.
 
-        double fortyOnePercentPortion = calculatePortionBetweenLimits(annualTaxableNetIncomeAfterReduction, THIRTY_PERCENT_LIMIT, FORTY_ONE_PERCENT_LIMIT);
+        double fourthBracketPortion = calculatePortionBetweenLimits(annualTaxableNetIncomeAfterReduction, THIRD_BRACKET_TAXABLE_LIMIT, FOURTH_BRACKET_TAXABLE_LIMIT);
 
-        double thirtyPercentPortion = calculatePortionBetweenLimits(annualTaxableNetIncomeAfterReduction, ELEVEN_PERCENT_LIMIT, THIRTY_PERCENT_LIMIT);
+        double thirdBracketPortion = calculatePortionBetweenLimits(annualTaxableNetIncomeAfterReduction, SECOND_BRACKET_TAXABLE_LIMIT, THIRD_BRACKET_TAXABLE_LIMIT);
 
-        double elevenPercentPortion = calculatePortionBetweenLimits(annualTaxableNetIncomeAfterReduction, UNTAXABLE_LIMIT, ELEVEN_PERCENT_LIMIT);
+        double secondBracketPortion = calculatePortionBetweenLimits(annualTaxableNetIncomeAfterReduction, FIRST_BRACKET_TAXABLE_LIMIT, SECOND_BRACKET_TAXABLE_LIMIT);
 
-        double untaxablePortion = calculatePortionUpToLimit(annualTaxableNetIncomeAfterReduction, UNTAXABLE_LIMIT);
+        double firstBracketPortion = calculatePortionBetweenLimits(annualTaxableNetIncomeAfterReduction,0 , FIRST_BRACKET_TAXABLE_LIMIT);
 
         // Calcul des montants d'impôt
-        double fortyFivePercentTaxeAmount = calculateTaxAmount(fortyFivePercentPortion, FORTY_FIVE_PERCENT_RATE);
-        double fortyOnePercentTaxeAmount = calculateTaxAmount(fortyOnePercentPortion, FORTY_ONE_PERCENT_RATE);
-        double thirtyPercentTaxeAmount = calculateTaxAmount(thirtyPercentPortion, THIRTY_PERCENT_RATE);
-        double elevenPercentTaxeAmount = calculateTaxAmount(elevenPercentPortion, ELEVEN_PERCENT_RATE);
-        double untaxableTaxeAmount = calculateTaxAmount(untaxablePortion, UNTAXABLE_PERCENT_RATE);
-
-        displayAnnualTaxableNetIncomeAfterReduction(annualTaxableNetIncomeAfterReduction);
+        double fifthBracketTaxeAmount = firstBracketPortion * FIFTH_BRACKET_TAXABLE_RATE;
+        double fourthBracketTaxeAmount = fourthBracketPortion * FOURTH_BRACKET_TAXABLE_RATE;
+        double thirdBracketTaxeAmount = thirdBracketPortion * THIRD_BRACKET_TAXABLE_RATE;
+        double secondBracketTaxeAmount = secondBracketPortion * SECOND_BRACKET_TAXABLE_RATE;
+        double firstBracketTaxeAmount = firstBracketPortion * FIRST_BRACKET_TAXABLE_RATE;
 
         // Totaux
-        double totalTaxe = untaxableTaxeAmount + elevenPercentTaxeAmount + thirtyPercentTaxeAmount
-                + fortyOnePercentTaxeAmount + fortyFivePercentTaxeAmount;
+        double totalTaxe = firstBracketTaxeAmount + secondBracketTaxeAmount + thirdBracketTaxeAmount
+                + fourthBracketTaxeAmount + fifthBracketTaxeAmount;
 
         System.out.println("Le montant total de l'impôt est de : " + totalTaxe + " €.");
 
@@ -92,8 +94,6 @@ public class FrenchRevenueTaxCalculatorFunctionRefactor {
 
 
     public static double getSocialContributionsRateByStatus(String status) {
-        final double WORKER_SOCIAL_CONTRIBUTIONS_RATE = 0.23;
-        final double MANAGER_SOCIAL_CONTRIBUTIONS_RATE = 0.25;
 
         if (status.equals("ouvrier")) {
             return WORKER_SOCIAL_CONTRIBUTIONS_RATE;
@@ -109,28 +109,13 @@ public class FrenchRevenueTaxCalculatorFunctionRefactor {
         return annualBrutSalary - (annualBrutSalary * socialContributionsRate);
     }
 
-    public static void displayAnnualTaxableNetSalary(String status, double socialContributionsRate, double annualBrutSalary) {
-        double annualTaxableNetSalary = calculateAnnualTaxableNetSalary(annualBrutSalary, status);
-        System.out.println("Le salaire net imposable d'un " + status + " avant l'abattement est " + annualTaxableNetSalary
-                + "€ pour un taux de " + (socialContributionsRate * 100) + "% et un salaire brut de " + annualBrutSalary + "€.");
+    public static double getAnnualTaxableNetSalary(String status, double socialContributionsRate, double annualBrutSalary) {
+        return calculateAnnualTaxableNetSalary(annualBrutSalary, status);
     }
 
     public static double calculateAnnualTaxableNetIncomeAfterReduction(double annualBrutSalary, String status) {
         double annualTaxableNetSalary = calculateAnnualTaxableNetSalary(annualBrutSalary, status);
         return annualTaxableNetSalary - (annualTaxableNetSalary * REDUCTION);
-    }
-
-    public static void displayAnnualTaxableNetIncomeAfterReduction(double annualTaxableNetIncomeAfterReduction) {
-        System.out.println("Le salaire net annuel imposable après réduction est de : " + annualTaxableNetIncomeAfterReduction);
-    }
-
-
-    // Portion au-dessus d'une limite
-    public static double calculatePortionAboveLimit(double income, double lowerLimit) {
-        if (income > lowerLimit) {
-            return income - lowerLimit;
-        }
-        return 0;
     }
 
     // Portion entre deux limites
@@ -144,14 +129,6 @@ public class FrenchRevenueTaxCalculatorFunctionRefactor {
         }
 
         return income - lowerLimit;
-    }
-
-    // Portion jusqu'à une limite
-    public static double calculatePortionUpToLimit(double income, double limit) {
-        if (income >= limit) {
-            return limit;
-        }
-        return income;
     }
 
     public static double calculateTaxAmount(double portion, double rate) {

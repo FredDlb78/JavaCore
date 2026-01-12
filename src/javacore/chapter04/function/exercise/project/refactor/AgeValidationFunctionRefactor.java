@@ -1,6 +1,7 @@
 package javacore.chapter04.function.exercise.project.refactor;
 
 public class AgeValidationFunctionRefactor {
+    static final int MAJORITY_IN_YEARS = 18;
 
     public static void main(String[] args) {
 
@@ -35,10 +36,17 @@ public class AgeValidationFunctionRefactor {
     }
 
     public static void displayCurrentDate(int currentDay, int currentMonth, int currentYear) {
-        System.out.println("Nous sommes le " + currentDay + "/" + currentMonth + "/" + currentYear + ".");    }
+        System.out.print("Nous sommes le ");
+        displayDate(currentDay, currentMonth, currentYear);
+    }
 
     public static void displayBirthdayDate(int birthdayDay, int birthdayMonth, int birthdayYear) {
-        System.out.println("Vous êtes né le " + birthdayDay + "/" + birthdayMonth + "/" + birthdayYear + ".");
+        System.out.print("Vous êtes né le ");
+        displayDate(birthdayDay, birthdayMonth, birthdayYear);
+    }
+
+    public static void displayDate(int day, int month, int year) {
+        System.out.println(day + "/" + month + "/" + year + "." );
     }
 
     public static boolean isMajor(int birthdayYear, int birthdayMonth, int birthdayDay, int thresholdYear, int currentMonth, int currentDay) {
@@ -58,7 +66,6 @@ public class AgeValidationFunctionRefactor {
     }
 
     public static int thresoldYearMajorityCalculation(int currentYear) {
-        final int MAJORITY_IN_YEARS = 18;
         int thresholdYearMajority = currentYear - MAJORITY_IN_YEARS;
         return thresholdYearMajority;
     }

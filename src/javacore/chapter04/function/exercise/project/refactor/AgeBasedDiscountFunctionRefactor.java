@@ -5,16 +5,16 @@ public class AgeBasedDiscountFunctionRefactor {
     public static void main(String[] args) {
 
         // -1, 0, 25, 26, 64, 65
-        int age = 65;
+        int age = 70;
         // -1, 0, 50
         double price = 50;
 
         if (!isAgeValid(age)) {
-            displayAgeErrorMsg(age);
+            System.out.println("L'âge ne peut pas être négatif. Age: " + age);
         } else if (!isPriceValid(price)) {
-            displayPriceErrorMsg(price);
+            System.out.println("Le prix ne peut pas être négatif. Prix: " + price);
         } else {
-            displayPriceWithDiscountRate(price, age);
+            displayPriceWithDiscounRate(price, age);
         }
     }
 
@@ -23,7 +23,7 @@ public class AgeBasedDiscountFunctionRefactor {
             //displayAgeErrorMsg(age);
             return false;
         }
-        displayAge(age);
+        System.out.println("Votre âge est de " + age + " an(s).");
         return true;
     }
 
@@ -32,40 +32,28 @@ public class AgeBasedDiscountFunctionRefactor {
             //displayPriceErrorMsg(price);
             return false;
         }
-        displayPriceWithoutDiscountRate(price);
-        return true;
-    }
-
-    public static void displayAgeErrorMsg(int age) {
-        System.out.println("L'âge ne peut pas être négatif. Age: " + age);
-    }
-
-    public static void displayPriceErrorMsg(double price) {
-        System.out.println("Le prix ne peut pas être négatif. Prix: " + price);
-    }
-
-    public static void displayAge(int age) {
-        System.out.println("Votre âge est de " + age + " an(s).");
-    }
-
-    public static void displayPriceWithoutDiscountRate(double price) {
         System.out.println("Le prix sans la réduction est de " + price + " €.");
+        return true;
     }
 
     public static double discountRateCalculation(int age) {
         double discountRate = 0;
         if (age <= 25) {
-            discountRate = 0.25;
+            return discountRate = 0.25;
         } else if (age >= 65) {
-            discountRate = 0.75;
+            return discountRate = 0.75;
         }
-        return discountRate;
+        return discountRate = 0.00;
     }
 
-    public static void displayPriceWithDiscountRate(double price, int age) {
+    public static double priceWithDiscountRateCalculation(double price, int age) {
         double discountRate = discountRateCalculation(age);
         price = price - (price * discountRate);
-        System.out.println("Le prix après application du taux de réduction de " + discountRate + " est de : " + price + " €.");
+        return price;
+    }
+
+    public static void displayPriceWithDiscounRate(double price, int age) {
+        System.out.println("Le prix après application du taux de réduction de " + discountRateCalculation(age) + " est de : " + priceWithDiscountRateCalculation(price, age) + " €.");
     }
 
 }

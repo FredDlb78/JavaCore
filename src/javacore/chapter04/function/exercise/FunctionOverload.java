@@ -14,15 +14,11 @@ public class FunctionOverload {
     }
 
     public static int sum(int number1, int number2) {
-
-        int result = number1 + number2;
-        return result;
+        return number1 + number2;
     }
 
     public static int sum(int number1, int number2, int number3) {
-
-        int result = sum(number1, number2) + number3;
-        return result;
+        return sum(sum(number1, number2), number3);
     }
 
 }

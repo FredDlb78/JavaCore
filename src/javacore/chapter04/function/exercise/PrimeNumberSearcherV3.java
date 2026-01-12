@@ -10,14 +10,13 @@ public class PrimeNumberSearcherV3 {
 
         while (primeNumberFound < searchAmount) {
 
+            potentialPrimeNumber++;
+
             if (isPrimeNumber(potentialPrimeNumber)) {
                 System.out.println(potentialPrimeNumber + " est le nombre premier n° " + (primeNumberFound + 1));
                 primeNumberFound++;
             }
-            potentialPrimeNumber++;
-
         }
-
     }
 
     public static boolean isPrimeNumber(int number) {

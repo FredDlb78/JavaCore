@@ -9,17 +9,17 @@ public class BasicStopWatchFunctionRefactor {
         int minutes = 0;
         int hours = 0;
 
-        while (i < 3601) {
+        while (i <= 3600) {
 
             waitOneSecond();
             i++;
             seconds++;
 
-            if (isNewMinute(seconds)) {
+            if (seconds >= 60) {
                 minutes++;
                 seconds = 0;
 
-                if (isNewHour(minutes)) {
+                if (minutes >= 60) {
                     hours++;
                     minutes = 0;
                 }
@@ -31,14 +31,6 @@ public class BasicStopWatchFunctionRefactor {
 
     public static void waitOneSecond() throws InterruptedException {
         Thread.sleep(1000);
-    }
-
-    public static boolean isNewMinute(int seconds) {
-        return seconds >= 60;
-    }
-
-    public static boolean isNewHour(int minutes) {
-        return minutes >= 60;
     }
 
     public static void displayChronometerTime(int hours, int minutes, int seconds) {

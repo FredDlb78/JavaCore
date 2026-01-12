@@ -4,24 +4,23 @@ public class MaxOfThreeFunctionRefactor {
 
     public static void main(String[] args) {
 
-        int a = 5;
+        int a = 7;
         int b = 7;
-        int c = 6;
+        int c = 7;
 
-        if (areThreeValuesEquals(a, b, c)) {
-            displayThreeValuesEqualsMsg();
+        if (areEquals(a, b, c)) {
         } else if (atLeastTwoValuesAreEqual(a, b, c)) {
-            displayWhichTwoValuesAreEqualMsg(a, b, c);
+            displayEqualsValues(a, b, c);
         } else {
-            //displayGreaterValue(a, b, c);
-            int max = whichValueIsGreater(a, b, c);
+            int max = getMaxValueOf(a, b, c);
             displayMaxValueMsg(a, b, c, max);
         }
 
         displayValues(a, b, c);
     }
 
-    public static boolean areThreeValuesEquals(int a, int b, int c) {
+    public static boolean areEquals(int a, int b, int c) {
+        System.out.println("Toutes les valeurs sont égales, il n'y en a pas une plus grande que les autres.");
         return a == b && b == c;
     }
 
@@ -29,7 +28,7 @@ public class MaxOfThreeFunctionRefactor {
         return a == b || a == c || b == c;
     }
 
-    public static int whichValueIsGreater(int a, int b, int c) {
+    public static int getMaxValueOf(int a, int b, int c) {
         if (a > b && a > c) {
             return a;
         }
@@ -39,11 +38,7 @@ public class MaxOfThreeFunctionRefactor {
         return c;
     }
 
-/*    public static void displayGreaterValue(int a, int b, int c) {
-        System.out.println("La valeur la plus haute est " + whichValueIsGreater(a, b, c) + " .");
-    }*/
-
-    public static void displayWhichTwoValuesAreEqualMsg(int a, int b, int c) {
+    public static void displayEqualsValues(int a, int b, int c) {
         if (a == b) {
             System.out.println("Les valeurs de a et b sont égales. Valeur : " + a);
         } else if (a == c) {
@@ -61,10 +56,6 @@ public class MaxOfThreeFunctionRefactor {
         } else {
             System.out.println("Le plus grand nombre est c. Valeur de c: " + c);
         }
-    }
-
-    public static void displayThreeValuesEqualsMsg() {
-        System.out.println("Toutes les valeurs sont égales, il n'y en a pas une plus grande que les autres.");
     }
 
     public static void displayValues(int a, int b, int c) {

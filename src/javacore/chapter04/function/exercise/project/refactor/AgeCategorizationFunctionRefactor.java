@@ -14,14 +14,6 @@ public class AgeCategorizationFunctionRefactor {
         }
     }
 
-
-
-
-
-
-
-
-
     public static boolean isAgeValid(int age) {
         if (age < 0) {
             return false;
@@ -39,6 +31,7 @@ public class AgeCategorizationFunctionRefactor {
     }
 
     public static String findCategory(int age) {
+        // TO DO remplacer par des switch
         String category = "";
         if (age >= 65) {
             category = "Senior";

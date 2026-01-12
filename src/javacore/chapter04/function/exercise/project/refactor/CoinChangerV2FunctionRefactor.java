@@ -40,24 +40,24 @@ public class CoinChangerV2FunctionRefactor {
         }
 
         // ---- Billets de 50 ----
-        fiftyBillsToBeReturned = calculateQuantityToReturn(amountToBeReturned, FIFTY_BILL, fiftyBillStock);
-        amountToBeReturned = calculateRemainingAmount(amountToBeReturned, FIFTY_BILL, fiftyBillsToBeReturned);
+        fiftyBillsToBeReturned = getQuantityToReturn(amountToBeReturned, FIFTY_BILL, fiftyBillStock);
+        amountToBeReturned = getRemainingAmount(amountToBeReturned, FIFTY_BILL, fiftyBillsToBeReturned);
 
         // ---- Billets de 20 ----
-        twentyBillsToBeReturned = calculateQuantityToReturn(amountToBeReturned, TWENTY_BILL, twentyBillStock);
-        amountToBeReturned = calculateRemainingAmount(amountToBeReturned, TWENTY_BILL, twentyBillsToBeReturned);
+        twentyBillsToBeReturned = getQuantityToReturn(amountToBeReturned, TWENTY_BILL, twentyBillStock);
+        amountToBeReturned = getRemainingAmount(amountToBeReturned, TWENTY_BILL, twentyBillsToBeReturned);
 
         // ---- Billets de 10 ----
-        tenBillsToBeReturned = calculateQuantityToReturn(amountToBeReturned, TEN_BILL, tenBillStock);
-        amountToBeReturned = calculateRemainingAmount(amountToBeReturned, TEN_BILL, tenBillsToBeReturned);
+        tenBillsToBeReturned = getQuantityToReturn(amountToBeReturned, TEN_BILL, tenBillStock);
+        amountToBeReturned = getRemainingAmount(amountToBeReturned, TEN_BILL, tenBillsToBeReturned);
 
         // ---- Pièces de 2 ----
-        twoCoinsToBeReturned = calculateQuantityToReturn(amountToBeReturned, TWO_COIN, twoCoinStock);
-        amountToBeReturned = calculateRemainingAmount(amountToBeReturned, TWO_COIN, twoCoinsToBeReturned);
+        twoCoinsToBeReturned = getQuantityToReturn(amountToBeReturned, TWO_COIN, twoCoinStock);
+        amountToBeReturned = getRemainingAmount(amountToBeReturned, TWO_COIN, twoCoinsToBeReturned);
 
         // ---- Pièces de 1 ----
-        oneCoinsToBeReturned = calculateQuantityToReturn(amountToBeReturned, ONE_COIN, oneCoinStock);
-        amountToBeReturned = calculateRemainingAmount(amountToBeReturned, ONE_COIN, oneCoinsToBeReturned);
+        oneCoinsToBeReturned = getQuantityToReturn(amountToBeReturned, ONE_COIN, oneCoinStock);
+        amountToBeReturned = getRemainingAmount(amountToBeReturned, ONE_COIN, oneCoinsToBeReturned);
 
         displayMoneyToBeReturned(fiftyBillsToBeReturned, twentyBillsToBeReturned, tenBillsToBeReturned, twoCoinsToBeReturned,
                 oneCoinsToBeReturned, FIFTY_BILL, TWENTY_BILL, TEN_BILL, TWO_COIN, ONE_COIN);
@@ -68,8 +68,8 @@ public class CoinChangerV2FunctionRefactor {
         }
     }
 
-    public static int calculateQuantityToReturn(int amountToBeReturned, int value, int stock) {
-        int requested = amountToBeReturned / value;
+    public static int getQuantityToReturn(int amountToBeReturned, int stock, final int VALUE) {
+        int requested = amountToBeReturned / VALUE;
 
         if (requested > stock) {
             return stock;
@@ -77,7 +77,7 @@ public class CoinChangerV2FunctionRefactor {
         return requested;
     }
 
-    public static int calculateRemainingAmount(int amountToBeReturned, int value, int quantityReturned) {
+    public static int getRemainingAmount(int amountToBeReturned, int value, int quantityReturned) {
         return amountToBeReturned - (value * quantityReturned);
     }
 

@@ -9,8 +9,7 @@ public class FactorialCalculatorFunctionRefactor {
 
         long result = calculateFactorial(number);
 
-        displayFactorial(originalNumber, result);
-
+        System.out.println("Le factoriel de " + originalNumber + " est " + result + ".");
     }
 
     public static long calculateFactorial(long number) {
@@ -27,9 +26,5 @@ public class FactorialCalculatorFunctionRefactor {
             }
         }
         return result;
-    }
-
-    public static void displayFactorial(long originalNumber, long result) {
-        System.out.println("Le factoriel de " + originalNumber + " est " + result + ".");
     }
 }
