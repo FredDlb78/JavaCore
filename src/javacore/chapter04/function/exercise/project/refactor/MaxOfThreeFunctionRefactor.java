@@ -9,6 +9,7 @@ public class MaxOfThreeFunctionRefactor {
         int c = 7;
 
         if (areEquals(a, b, c)) {
+            System.out.println("Toutes les valeurs sont égales, il n'y en a pas une plus grande que les autres.");
         } else if (atLeastTwoValuesAreEqual(a, b, c)) {
             displayEqualsValues(a, b, c);
         } else {
@@ -20,7 +21,6 @@ public class MaxOfThreeFunctionRefactor {
     }
 
     public static boolean areEquals(int a, int b, int c) {
-        System.out.println("Toutes les valeurs sont égales, il n'y en a pas une plus grande que les autres.");
         return a == b && b == c;
     }
 

@@ -31,30 +31,24 @@ public class CoinChangerV4 {
         }
 
         // Nombre de billets/pièces à rendre
-        int fiftyBillsToBeReturned;
-        int twentyBillsToBeReturned;
-        int tenBillsToBeReturned;
-        int twoCoinsToBeReturned;
-        int oneCoinsToBeReturned;
-
         // ---- Billets de 50 ----
-        fiftyBillsToBeReturned = getQuantityToReturn(amountToBeReturned, FIFTY_BILL, fiftyBillStock);
+        int fiftyBillsToBeReturned = getQuantityToReturn(amountToBeReturned, FIFTY_BILL, fiftyBillStock);
         amountToBeReturned = getRemainingAmount(amountToBeReturned, FIFTY_BILL, fiftyBillsToBeReturned);
 
         // ---- Billets de 20 ----
-        twentyBillsToBeReturned = getQuantityToReturn(amountToBeReturned, TWENTY_BILL, twentyBillStock);
+        int twentyBillsToBeReturned = getQuantityToReturn(amountToBeReturned, TWENTY_BILL, twentyBillStock);
         amountToBeReturned = getRemainingAmount(amountToBeReturned, TWENTY_BILL, twentyBillsToBeReturned);
 
         // ---- Billets de 10 ----
-        tenBillsToBeReturned = getQuantityToReturn(amountToBeReturned, TEN_BILL, tenBillStock);
+        int tenBillsToBeReturned = getQuantityToReturn(amountToBeReturned, TEN_BILL, tenBillStock);
         amountToBeReturned = getRemainingAmount(amountToBeReturned, TEN_BILL, tenBillsToBeReturned);
 
         // ---- Pièces de 2 ----
-        twoCoinsToBeReturned = getQuantityToReturn(amountToBeReturned, TWO_COIN, twoCoinStock);
+        int twoCoinsToBeReturned = getQuantityToReturn(amountToBeReturned, TWO_COIN, twoCoinStock);
         amountToBeReturned = getRemainingAmount(amountToBeReturned, TWO_COIN, twoCoinsToBeReturned);
 
         // ---- Pièces de 1 ----
-        oneCoinsToBeReturned = getQuantityToReturn(amountToBeReturned, ONE_COIN, oneCoinStock);
+        int oneCoinsToBeReturned = getQuantityToReturn(amountToBeReturned, ONE_COIN, oneCoinStock);
         amountToBeReturned = getRemainingAmount(amountToBeReturned, ONE_COIN, oneCoinsToBeReturned);
 
         // Total rendu
@@ -115,8 +109,12 @@ public class CoinChangerV4 {
 
     public static int getQuantityToReturn(int amountToBeReturned, int value, int stock) {
         int requested = amountToBeReturned / value;
-        return Math.min(requested, stock);
+        if (requested > stock) {
+            return stock;
+        }
+        return requested;
     }
+
 
     public static int getRemainingAmount(int amountToBeReturned, int value, int quantityReturned) {
         return amountToBeReturned - (value * quantityReturned);

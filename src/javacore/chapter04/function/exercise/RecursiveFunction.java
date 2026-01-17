@@ -5,17 +5,18 @@ public class RecursiveFunction {
     public static void main(String[] args) {
 
         int a = 1;
-        int limit = 10000;
+        final int limit = 10000;
         displayNumbers(a, limit);
     }
 
-    public static void displayNumbers(int a, int limit) {
+    public static void displayNumbers(int a, final int LIMIT) {
+        if (a > LIMIT) {
+            return;
+        }
         int b = a + 1;
 
         System.out.println(a);
-        if (b > limit) {
-            return;
-        }
-        displayNumbers(b, limit);
+
+        displayNumbers(b, LIMIT);
     }
 }

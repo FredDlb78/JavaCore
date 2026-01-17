@@ -2,28 +2,32 @@ package javacore.chapter04.function.exercise.project.refactor;
 
 public class FrenchRevenueTaxCalculatorFunctionRefactor {
 
-    static final double WORKER_SOCIAL_CONTRIBUTIONS_RATE = 0.23;
-    static final double MANAGER_SOCIAL_CONTRIBUTIONS_RATE = 0.25;
+    static final double RATE_SOCIAL_CONTRIBUTIONS_WORKER = 0.23;
+    static final double RATE_SOCIAL_CONTRIBUTIONS_MANAGER = 0.25;
 
     // Constante d'abattement (classique : visible partout)
-    public static final double REDUCTION = 10.0 / 100;
+    public static final double TAXE_ABATMENT = 10.0 / 100;
 
     public static void main(String[] args) {
 
         // -1, 0, 11294, 11295, 28797, 28798, 82341, 83342, 177106, 177107
         double annualBrutSalary = 45000;
 
-        final double FIRST_BRACKET_TAXABLE_LIMIT = 11294.0;          // 0 %
-        final double SECOND_BRACKET_TAXABLE_LIMIT = 28797.0;     // 11 %
-        final double THIRD_BRACKET_TAXABLE_LIMIT = 82341.0;     // 30 %
-        final double FOURTH_BRACKET_TAXABLE_LIMIT = 177106.0; // 41 %
-        // 45% au-dessus
+        final double BRACKET_FIRST_TAXABLE_LIMIT = 0;
+        final double BRACKET_FIRST_TAXABLE_RATE = 0.0;
 
-        final double FIRST_BRACKET_TAXABLE_RATE = 0.0;
-        final double SECOND_BRACKET_TAXABLE_RATE = 0.11;
-        final double THIRD_BRACKET_TAXABLE_RATE = 0.30;
-        final double FOURTH_BRACKET_TAXABLE_RATE = 0.41;
-        final double FIFTH_BRACKET_TAXABLE_RATE = 0.45;
+        final double BRACKET_SECOND_TAXABLE_LIMIT = 11294.0;     // 0 %
+        final double BRACKET_SECOND_TAXABLE_RATE = 0.11;
+
+        final double BRACKET_THIRD_TAXABLE_LIMIT = 28797.0;      // 11 %
+        final double BRACKET_THIRD_TAXABLE_RATE = 0.30;
+
+        final double BRACKET_FOURTH_TAXABLE_LIMIT = 82341.0;     // 30 %
+        final double BRACKET_FOURTH_TAXABLE_RATE = 0.41;
+
+        final double BRACKET_FIFTH_TAXABLE_LIMIT = 177106.0;     // 41 %
+        final double BRACKET_FIFTH_TAXABLE_RATE = 0.45;
+        // 45% au-dessus
 
         String status = "ouvrier"; // ou "cadre"
 
@@ -45,22 +49,22 @@ public class FrenchRevenueTaxCalculatorFunctionRefactor {
 
 
         // Calcul des portions par tranche
-        double fifthBracketPortion = calculatePortionBetweenLimits(annualTaxableNetIncomeAfterReduction, FOURTH_BRACKET_TAXABLE_LIMIT, Double.POSITIVE_INFINITY); // J'ai trouvé ça avec l'IA, je ne savais pas comment représenter l'infini.
+        double fifthBracketPortion = calculatePortionBetweenLimits(annualTaxableNetIncomeAfterReduction, BRACKET_FIFTH_TAXABLE_LIMIT, Double.POSITIVE_INFINITY); // J'ai trouvé ça avec l'IA, je ne savais pas comment représenter l'infini.
 
-        double fourthBracketPortion = calculatePortionBetweenLimits(annualTaxableNetIncomeAfterReduction, THIRD_BRACKET_TAXABLE_LIMIT, FOURTH_BRACKET_TAXABLE_LIMIT);
+        double fourthBracketPortion = calculatePortionBetweenLimits(annualTaxableNetIncomeAfterReduction, BRACKET_FOURTH_TAXABLE_LIMIT, BRACKET_FIFTH_TAXABLE_LIMIT);
 
-        double thirdBracketPortion = calculatePortionBetweenLimits(annualTaxableNetIncomeAfterReduction, SECOND_BRACKET_TAXABLE_LIMIT, THIRD_BRACKET_TAXABLE_LIMIT);
+        double thirdBracketPortion = calculatePortionBetweenLimits(annualTaxableNetIncomeAfterReduction, BRACKET_THIRD_TAXABLE_LIMIT, BRACKET_FOURTH_TAXABLE_LIMIT);
 
-        double secondBracketPortion = calculatePortionBetweenLimits(annualTaxableNetIncomeAfterReduction, FIRST_BRACKET_TAXABLE_LIMIT, SECOND_BRACKET_TAXABLE_LIMIT);
+        double secondBracketPortion = calculatePortionBetweenLimits(annualTaxableNetIncomeAfterReduction, BRACKET_SECOND_TAXABLE_LIMIT, BRACKET_THIRD_TAXABLE_LIMIT);
 
-        double firstBracketPortion = calculatePortionBetweenLimits(annualTaxableNetIncomeAfterReduction,0 , FIRST_BRACKET_TAXABLE_LIMIT);
+        double firstBracketPortion = calculatePortionBetweenLimits(annualTaxableNetIncomeAfterReduction, 0, BRACKET_SECOND_TAXABLE_LIMIT);
 
         // Calcul des montants d'impôt
-        double fifthBracketTaxeAmount = firstBracketPortion * FIFTH_BRACKET_TAXABLE_RATE;
-        double fourthBracketTaxeAmount = fourthBracketPortion * FOURTH_BRACKET_TAXABLE_RATE;
-        double thirdBracketTaxeAmount = thirdBracketPortion * THIRD_BRACKET_TAXABLE_RATE;
-        double secondBracketTaxeAmount = secondBracketPortion * SECOND_BRACKET_TAXABLE_RATE;
-        double firstBracketTaxeAmount = firstBracketPortion * FIRST_BRACKET_TAXABLE_RATE;
+        double fifthBracketTaxeAmount = firstBracketPortion * BRACKET_FIFTH_TAXABLE_RATE;
+        double fourthBracketTaxeAmount = fourthBracketPortion * BRACKET_FOURTH_TAXABLE_RATE;
+        double thirdBracketTaxeAmount = thirdBracketPortion * BRACKET_THIRD_TAXABLE_RATE;
+        double secondBracketTaxeAmount = secondBracketPortion * BRACKET_SECOND_TAXABLE_RATE;
+        double firstBracketTaxeAmount = firstBracketPortion * BRACKET_FIRST_TAXABLE_RATE;
 
         // Totaux
         double totalTaxe = firstBracketTaxeAmount + secondBracketTaxeAmount + thirdBracketTaxeAmount
@@ -92,13 +96,12 @@ public class FrenchRevenueTaxCalculatorFunctionRefactor {
         return true;
     }
 
-
     public static double getSocialContributionsRateByStatus(String status) {
 
         if (status.equals("ouvrier")) {
-            return WORKER_SOCIAL_CONTRIBUTIONS_RATE;
+            return RATE_SOCIAL_CONTRIBUTIONS_WORKER;
         } else if (status.equals("cadre")) {
-            return MANAGER_SOCIAL_CONTRIBUTIONS_RATE;
+            return RATE_SOCIAL_CONTRIBUTIONS_MANAGER;
         } else {
             return 0;
         }
@@ -115,7 +118,7 @@ public class FrenchRevenueTaxCalculatorFunctionRefactor {
 
     public static double calculateAnnualTaxableNetIncomeAfterReduction(double annualBrutSalary, String status) {
         double annualTaxableNetSalary = calculateAnnualTaxableNetSalary(annualBrutSalary, status);
-        return annualTaxableNetSalary - (annualTaxableNetSalary * REDUCTION);
+        return annualTaxableNetSalary - (annualTaxableNetSalary * TAXE_ABATMENT);
     }
 
     // Portion entre deux limites
