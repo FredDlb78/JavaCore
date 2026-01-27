@@ -2,6 +2,15 @@ package javacore.chapter05.object.exercise;
 
 public class Pen {
 
+    String name;
+    String color;
+    String manufacturer;
+
+    int quantity;
+    int weight;
+
+    double price;
+
     public static void main(String[] args) {
 
         Pen pen = new Pen();
@@ -15,15 +24,6 @@ public class Pen {
         pen.displayInformation();
 
     }
-
-    String name;
-    String color;
-    String manufacturer;
-
-    int quantity;
-    int weight;
-
-    double price;
 
     public void displayInformation() {
         System.out.println(

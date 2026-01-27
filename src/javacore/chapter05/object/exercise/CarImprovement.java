@@ -20,8 +20,17 @@ public class CarImprovement {
         this.price = price;
         this.odometer = 0;
         this.isEngineStarted = false;
+    }
 
-        this.displayInformation();
+    public static void main(String[] args) {
+        CarImprovement car = new CarImprovement("Ferrari", "F458", "Rouge", "J22H2JK32MLKE0", 250000);
+
+        car.turnEngineOn();
+        car.turnEngineOn();
+        car.run(2000);
+        car.turnEngineOff();
+        car.turnEngineOff();
+        car.displayInformation();
     }
 
     public double run(double distance) {
@@ -31,26 +40,24 @@ public class CarImprovement {
             return distance;
         } else {
             System.err.println("Vous devez démarrer la voiture pour pouvoir rouler.");
-            return distance = 0;
+            return 0;
         }
     }
 
-    public boolean turnOn() {
-        if (isEngineStarted) {
-            System.out.println("Le moteur est déjà démarré.");
-        } else {
-            System.out.println("Moteur démarré.");
-        }
-        return isEngineStarted = true;
-    }
-
-    public boolean turnOff() {
+    public boolean turnEngineOn() {
         if (!isEngineStarted) {
-            System.out.println("Le moteur est déjà éteint.");
-        } else {
-            System.out.println("Moteur éteint.");
+            System.out.println("Moteur démarré.");
+            return isEngineStarted = true;
         }
         return isEngineStarted = false;
+    }
+
+    public boolean turnEngineOff() {
+        if (!isEngineStarted) {
+            System.out.println("Moteur éteint.");
+            return isEngineStarted = false;
+        }
+        return isEngineStarted = true;
     }
 
     public void displayInformation() {
@@ -62,16 +69,5 @@ public class CarImprovement {
                         "Couleur : "        + this.color        + " | " +
                         "Kilométrage :  "   + this.odometer
         );
-    }
-
-    public static void main(String[] args) {
-        CarImprovement car = new CarImprovement("Ferrari", "F458", "Rouge", "J22H2JK32MLKE0", 250000);
-
-        car.turnOn();
-        car.turnOn();
-        car.run(2000);
-        car.turnOff();
-        car.turnOff();
-        car.displayInformation();
     }
 }
