@@ -8,10 +8,10 @@ public class AlphabetVowelSearcher {
         String vowels = "aeiouy";
 
         // Consignes 1 & 2 : recherche manuelle avec charAt
-        for (int index = 0; index < alphabet.length(); index++) {
-            for (int index2 = 0; index2 < vowels.length(); index2++) {
-                if (alphabet.charAt(index) == vowels.charAt(index2)) {
-                    System.out.println("La lettre à la position " + (index + 1) + " est la voyelle : " + alphabet.charAt(index));
+        for (int alphaIndex = 0; alphaIndex < alphabet.length(); alphaIndex++) {
+            for (int vowelsIndex = 0; vowelsIndex < vowels.length(); vowelsIndex++) {
+                if (alphabet.charAt(alphaIndex) == vowels.charAt(vowelsIndex)) {
+                    System.out.println("La lettre à la position " + (alphaIndex + 1) + " est la voyelle : " + alphabet.charAt(alphaIndex));
                 }
             }
         }
