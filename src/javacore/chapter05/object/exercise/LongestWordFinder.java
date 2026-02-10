@@ -56,9 +56,9 @@ public class LongestWordFinder {
 
 
     public static String findLongestWord(String[] text) {
-        String longestWord = text[0];
+        String longestWord = "";
 
-        for (int index = 1; index < text.length; index++) {
+        for (int index = 0; index < text.length; index++) {
 
             String currentWord = text[index];
 
@@ -75,6 +75,7 @@ public class LongestWordFinder {
     }
 
     public static void displayLongestWordAndLength(String[] text) {
-        System.out.println("Le mot le plus long est " + findLongestWord(text) + ". Il contient " + countLetters(findLongestWord(text)) + " lettres.");
+        String longestWord = findLongestWord(text);
+        System.out.println("Le mot le plus long est " + longestWord + ". Il contient " + countLetters(longestWord) + " lettres.");
     }
 }
