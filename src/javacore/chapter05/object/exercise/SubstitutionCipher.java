@@ -21,7 +21,25 @@ public class SubstitutionCipher {
         // Ecrivez le code ci-dessous
         System.out.println(encryptText(textToEncrypt));
         System.out.println(encryptTextV2(textToEncrypt));
+        System.out.println(cipher(textToEncrypt, latinAlphabet, substitutionAlphabet));
 
+    }
+
+    // Consigne 3
+    public static String cipher(String textToEncrypt, String alphabet, String substitutionAlphabet) {
+        String encryptedText = "";
+
+        for (int textIndex = 0; textIndex < textToEncrypt.length(); textIndex++) {
+
+            char currentChar = textToEncrypt.charAt(textIndex);
+            int currentCharIndex = alphabet.indexOf(currentChar);
+
+            if (currentCharIndex >= 0) {
+                currentChar = substitutionAlphabet.charAt(currentCharIndex);
+            }
+            encryptedText += currentChar;
+        }
+        return encryptedText;
     }
 
     // Consigne 2
