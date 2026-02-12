@@ -1,6 +1,10 @@
 package javacore.chapter05.object.exercise;
 
+import java.util.Scanner;
+
 public class SubstitutionCipher {
+
+    static Scanner scanner = new Scanner(System.in);
 
     /**
      * Alphabet Standard (Latin)
@@ -19,11 +23,63 @@ public class SubstitutionCipher {
         String textToEncrypt = "ce message secret ne doit pas arriver entre de mauvaises mains !";
 
         // Ecrivez le code ci-dessous
-        System.out.println(encryptText(textToEncrypt));
-        System.out.println(encryptTextV2(textToEncrypt));
-        System.out.println(cipher(textToEncrypt, latinAlphabet, substitutionAlphabet));
-        System.out.println(cipher(textToEncrypt, latinAlphabet, substitutionAlphabet, 3));
+//        System.out.println(encryptText(textToEncrypt));
+//        System.out.println(encryptTextV2(textToEncrypt));
+//        System.out.println(cipher(textToEncrypt, latinAlphabet, substitutionAlphabet));
+//        String encryptedText = cipher(textToEncrypt, latinAlphabet, substitutionAlphabet, 3);
+//        System.out.println(encryptedText);
+//        String decryptedText = decipher(encryptedText, substitutionAlphabet, latinAlphabet, 3);
+//        System.out.println(decryptedText);
+        System.out.println("Le texte après traitement est : " + processText(askShouldEncrypt()));
 
+    }
+
+    // Consigne 5
+
+    // TODO: Verrouiller les scanners
+
+    public static String processText(short shouldEncrypt) {
+        String result;
+        if (shouldEncrypt == 1) {
+            result = cipher(askForText(), latinAlphabet, substitutionAlphabet, askForIterations());
+        } else {
+            result = decipher(askForText(), substitutionAlphabet, latinAlphabet, askForIterations());
+        }
+        return result;
+    }
+
+    public static int askForIterations() {
+        System.out.print("Combien de fois souhaitez-vous chiffrer votre texte : ");
+        int iterations = scanner.nextInt();
+        if (iterations < 1) {
+            System.err.println("La valeur n'est saisie n'est pas correcte, votre texte sera traiter 1 fois.");
+            iterations = 1;
+        }
+        scanner.nextLine();
+        return iterations;
+    }
+
+    public static short askShouldEncrypt() {
+        System.out.print("Souhaitez-vous chiffrer votre texte (si oui tapez 1) ou le déchiffrer (tapez 2) : ");
+        short shouldEncrypt = scanner.nextShort();
+        scanner.nextLine();
+        return shouldEncrypt;
+    }
+
+    public static String askForText() {
+        System.out.print("Texte à chiffrer/déchiffrer : ");
+        String text = scanner.nextLine();
+        return text;
+    }
+
+
+    public static String decipher(String textToDecrypt, String substitutionAlphabet, String alphabet, int decipherIterations) {
+        String decryptedText = "";
+        for (int iteration = 0; iteration < decipherIterations; iteration++) {
+            decryptedText = cipher(textToDecrypt, substitutionAlphabet, alphabet);
+            textToDecrypt = decryptedText;
+        }
+        return decryptedText;
     }
 
     // Consigne 4
