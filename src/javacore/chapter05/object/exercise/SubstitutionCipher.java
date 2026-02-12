@@ -49,7 +49,7 @@ public class SubstitutionCipher {
         System.out.print("Combien de fois souhaitez-vous chiffrer votre texte : ");
         int iterations = scanner.nextInt();
         if (iterations < 1) {
-            System.err.println("La valeur n'est saisie n'est pas correcte, votre texte sera traiter 1 fois.");
+            System.err.println("La valeur saisie n'est pas correcte, votre texte sera traité 1 fois.");
             iterations = 1;
         }
         scanner.nextLine();
@@ -61,7 +61,7 @@ public class SubstitutionCipher {
         short attempts = 0;
         short shouldEncrypt;
         do {
-            System.out.print("Souhaitez-vous chiffrer votre texte (si oui tapez 1) ou le déchiffrer (tapez 2) : ");
+            System.out.print("Souhaitez-vous chiffrer votre texte (1) ou le déchiffrer (2) : ");
             shouldEncrypt = scanner.nextShort();
             scanner.nextLine();
             attempts++;
@@ -69,13 +69,13 @@ public class SubstitutionCipher {
             if (shouldEncrypt != 1 && shouldEncrypt != 2) {
                 System.out.println("Valeur invalide.");
             }
-        } while (shouldEncrypt != 1 && shouldEncrypt != 2 && attempts < MAX_ATTEMPTS); {
-            if (shouldEncrypt != 1 && shouldEncrypt != 2) {
-                System.err.println("Nombre de tentatives dépassé. Fermeture du programme.");
-                System.exit(1); // Trouvé en cherchant comment stopper le programme mais on ne l'a pas encore vu.
-            }
-            return shouldEncrypt;
+        } while (shouldEncrypt != 1 && shouldEncrypt != 2 && attempts < MAX_ATTEMPTS);
+
+        if (shouldEncrypt != 1 && shouldEncrypt != 2) {
+            System.err.println("Nombre de tentatives dépassé. Fermeture du programme.");
+            System.exit(1); // Trouvé en cherchant comment stopper le programme mais on ne l'a pas encore vu.
         }
+        return shouldEncrypt;
     }
 
     public static String askForText() {
@@ -103,7 +103,6 @@ public class SubstitutionCipher {
         }
         return encryptedText;
     }
-
 
     // Consigne 3
     public static String cipher(String textToEncrypt, String alphabet, String substitutionAlphabet) {
