@@ -22,8 +22,20 @@ public class SubstitutionCipher {
         System.out.println(encryptText(textToEncrypt));
         System.out.println(encryptTextV2(textToEncrypt));
         System.out.println(cipher(textToEncrypt, latinAlphabet, substitutionAlphabet));
+        System.out.println(cipher(textToEncrypt, latinAlphabet, substitutionAlphabet, 3));
 
     }
+
+    // Consigne 4
+    public static String cipher(String textToEncrypt, String alphabet, String substitutionAlphabet, int cipherIterations) {
+        String encryptedText = "";
+        for (int iteration = 0; iteration < cipherIterations; iteration++) {
+            encryptedText = cipher(textToEncrypt, alphabet, substitutionAlphabet);
+            textToEncrypt = encryptedText;
+        }
+        return encryptedText;
+    }
+
 
     // Consigne 3
     public static String cipher(String textToEncrypt, String alphabet, String substitutionAlphabet) {
