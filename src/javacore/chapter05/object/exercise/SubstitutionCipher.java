@@ -35,9 +35,6 @@ public class SubstitutionCipher {
     }
 
     // Consigne 5
-
-    // TODO: Verrouiller les scanners
-
     public static String processText(short shouldEncrypt) {
         String result;
         if (shouldEncrypt == 1) {
@@ -60,15 +57,30 @@ public class SubstitutionCipher {
     }
 
     public static short askShouldEncrypt() {
-        System.out.print("Souhaitez-vous chiffrer votre texte (si oui tapez 1) ou le déchiffrer (tapez 2) : ");
-        short shouldEncrypt = scanner.nextShort();
-        scanner.nextLine();
-        return shouldEncrypt;
+        final short MAX_ATTEMPTS = 5;
+        short attempts = 0;
+        short shouldEncrypt;
+        do {
+            System.out.print("Souhaitez-vous chiffrer votre texte (si oui tapez 1) ou le déchiffrer (tapez 2) : ");
+            shouldEncrypt = scanner.nextShort();
+            scanner.nextLine();
+            attempts++;
+
+            if (shouldEncrypt != 1 && shouldEncrypt != 2) {
+                System.out.println("Valeur invalide.");
+            }
+        } while (shouldEncrypt != 1 && shouldEncrypt != 2 && attempts < MAX_ATTEMPTS); {
+            if (shouldEncrypt != 1 && shouldEncrypt != 2) {
+                System.err.println("Nombre de tentatives dépassé. Fermeture du programme.");
+                System.exit(1); // Trouvé en cherchant comment stopper le programme mais on ne l'a pas encore vu.
+            }
+            return shouldEncrypt;
+        }
     }
 
     public static String askForText() {
         System.out.print("Texte à chiffrer/déchiffrer : ");
-        String text = scanner.nextLine();
+        String text = scanner.nextLine().trim().toLowerCase();
         return text;
     }
 
