@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class SubstitutionCipher {
 
     static Scanner scanner = new Scanner(System.in);
+    static final short MAX_ATTEMPTS = 5;
 
     /**
      * Alphabet Standard (Latin)
@@ -30,14 +31,33 @@ public class SubstitutionCipher {
 //        System.out.println(encryptedText);
 //        String decryptedText = cipher(encryptedText, substitutionAlphabet, latinAlphabet, 3);
 //        System.out.println(decryptedText);
-        System.out.println("Le texte après traitement est : " + processText(askShouldEncrypt()));
-        askForSubstitutionAlphabet();
-
+//        System.out.println("Le texte après traitement est : " + processText(askShouldEncrypt()));
+        System.out.println("Le texte après traitement est : " + processTextWithUserSubstitutionAlphabet(askShouldEncrypt()));
     }
 
     // Consigne 6
-    public static boolean doesUserSubstitutionAlphabetContain26Characters() {
-        if (askForSubstitutionAlphabet().length() != 26) {
+    public static String processTextWithUserSubstitutionAlphabet(short shouldEncrypt) {
+        String result;
+        if (shouldEncrypt == 1) {
+            result = cipher(askForText(), latinAlphabet, askForSubstitutionAlphabet(), askForIterations());
+        } else {
+            result = cipher(askForText(), askForSubstitutionAlphabet(), latinAlphabet, askForIterations());
+        }
+        return result;
+    }
+
+    public static boolean isUniqueEachCharacter(String alphabet) {
+        for (int index = 0; index < alphabet.length(); index++) {
+            char currentChar = alphabet.charAt(index);
+            if (alphabet.indexOf(currentChar) != alphabet.lastIndexOf(currentChar)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean doesUserSubstitutionAlphabetContain26Characters(String alphabet) {
+        if (alphabet.length() != 26) {
             return false;
         }
         return true;
@@ -45,13 +65,20 @@ public class SubstitutionCipher {
 
     public static String askForSubstitutionAlphabet() {
         String userSubstitutionAlphabet;
+        short attempts = 0;
         do {
-            System.out.print("Veuillez fournir votre alphabet de substitution : ");
-            userSubstitutionAlphabet = scanner.nextLine();
-            if (!doesUserSubstitutionAlphabetContain26Characters()) {
-                System.out.println("Votre alphabet ne contient pas 26 caractères.");
+            System.out.println("Veuillez fournir votre alphabet de substitution : ");
+            userSubstitutionAlphabet = scanner.nextLine().trim().toLowerCase();
+            if (!doesUserSubstitutionAlphabetContain26Characters(userSubstitutionAlphabet)) {
+                System.err.println("Votre alphabet ne contient pas 26 caractères.");
             }
-        } while (!doesUserSubstitutionAlphabetContain26Characters());
+            if (!isUniqueEachCharacter(userSubstitutionAlphabet)) {
+                System.err.println("Au moins un caractère est en doublon.");
+            }
+            attempts++;
+        } while ((!doesUserSubstitutionAlphabetContain26Characters(userSubstitutionAlphabet)
+                || !isUniqueEachCharacter(userSubstitutionAlphabet))
+                && attempts < MAX_ATTEMPTS);
 
         return userSubstitutionAlphabet;
     }
@@ -79,7 +106,6 @@ public class SubstitutionCipher {
     }
 
     public static short askShouldEncrypt() {
-        final short MAX_ATTEMPTS = 5;
         short attempts = 0;
         short shouldEncrypt;
         do {
@@ -108,17 +134,17 @@ public class SubstitutionCipher {
 
     // Consigne 4
     public static String cipher(String textToEncrypt, String alphabet, String substitutionAlphabet, int cipherIterations) {
-        String encryptedText = "";
+        String resultText = "";
         for (int iteration = 0; iteration < cipherIterations; iteration++) {
-            encryptedText = cipher(textToEncrypt, alphabet, substitutionAlphabet);
-            textToEncrypt = encryptedText;
+            resultText = cipher(textToEncrypt, alphabet, substitutionAlphabet);
+            textToEncrypt = resultText;
         }
-        return encryptedText;
+        return resultText;
     }
 
     // Consigne 3
     public static String cipher(String textToEncrypt, String alphabet, String substitutionAlphabet) {
-        String encryptedText = "";
+        String resultText = "";
 
         for (int textIndex = 0; textIndex < textToEncrypt.length(); textIndex++) {
 
@@ -128,9 +154,9 @@ public class SubstitutionCipher {
             if (currentCharIndex >= 0) {
                 currentChar = substitutionAlphabet.charAt(currentCharIndex);
             }
-            encryptedText += currentChar;
+            resultText += currentChar;
         }
-        return encryptedText;
+        return resultText;
     }
 
     // Consigne 2
