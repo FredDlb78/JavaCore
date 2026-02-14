@@ -28,10 +28,32 @@ public class SubstitutionCipher {
 //        System.out.println(cipher(textToEncrypt, latinAlphabet, substitutionAlphabet));
 //        String encryptedText = cipher(textToEncrypt, latinAlphabet, substitutionAlphabet, 3);
 //        System.out.println(encryptedText);
-//        String decryptedText = decipher(encryptedText, substitutionAlphabet, latinAlphabet, 3);
+//        String decryptedText = cipher(encryptedText, substitutionAlphabet, latinAlphabet, 3);
 //        System.out.println(decryptedText);
         System.out.println("Le texte après traitement est : " + processText(askShouldEncrypt()));
+        askForSubstitutionAlphabet();
 
+    }
+
+    // Consigne 6
+    public static boolean doesUserSubstitutionAlphabetContain26Characters() {
+        if (askForSubstitutionAlphabet().length() != 26) {
+            return false;
+        }
+        return true;
+    }
+
+    public static String askForSubstitutionAlphabet() {
+        String userSubstitutionAlphabet;
+        do {
+            System.out.print("Veuillez fournir votre alphabet de substitution : ");
+            userSubstitutionAlphabet = scanner.nextLine();
+            if (!doesUserSubstitutionAlphabetContain26Characters()) {
+                System.out.println("Votre alphabet ne contient pas 26 caractères.");
+            }
+        } while (!doesUserSubstitutionAlphabetContain26Characters());
+
+        return userSubstitutionAlphabet;
     }
 
     // Consigne 5
@@ -40,7 +62,7 @@ public class SubstitutionCipher {
         if (shouldEncrypt == 1) {
             result = cipher(askForText(), latinAlphabet, substitutionAlphabet, askForIterations());
         } else {
-            result = decipher(askForText(), substitutionAlphabet, latinAlphabet, askForIterations());
+            result = cipher(askForText(), substitutionAlphabet, latinAlphabet, askForIterations());
         }
         return result;
     }
@@ -82,16 +104,6 @@ public class SubstitutionCipher {
         System.out.print("Texte à chiffrer/déchiffrer : ");
         String text = scanner.nextLine().trim().toLowerCase();
         return text;
-    }
-
-
-    public static String decipher(String textToDecrypt, String substitutionAlphabet, String alphabet, int decipherIterations) {
-        String decryptedText = "";
-        for (int iteration = 0; iteration < decipherIterations; iteration++) {
-            decryptedText = cipher(textToDecrypt, substitutionAlphabet, alphabet);
-            textToDecrypt = decryptedText;
-        }
-        return decryptedText;
     }
 
     // Consigne 4
