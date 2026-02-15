@@ -46,6 +46,16 @@ public class SubstitutionCipher {
         return result;
     }
 
+    public static boolean isOnlyLowercaseLettersAZ(String alphabet) {
+        for (int index = 0; index < alphabet.length(); index++) {
+            char currentChar = alphabet.charAt(index);
+            if (currentChar < 'a' || currentChar > 'z') {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static boolean isUniqueEachCharacter(String alphabet) {
         for (int index = 0; index < alphabet.length(); index++) {
             char currentChar = alphabet.charAt(index);
@@ -66,20 +76,26 @@ public class SubstitutionCipher {
     public static String askForSubstitutionAlphabet() {
         String userSubstitutionAlphabet;
         short attempts = 0;
+
         do {
             System.out.println("Veuillez fournir votre alphabet de substitution : ");
             userSubstitutionAlphabet = scanner.nextLine().trim().toLowerCase();
+
             if (!doesUserSubstitutionAlphabetContain26Characters(userSubstitutionAlphabet)) {
                 System.err.println("Votre alphabet ne contient pas 26 caractères.");
+            }
+            if (!isOnlyLowercaseLettersAZ(userSubstitutionAlphabet)) {
+                System.err.println("Votre alphabet doit contenir uniquement des lettres.");
             }
             if (!isUniqueEachCharacter(userSubstitutionAlphabet)) {
                 System.err.println("Au moins un caractère est en doublon.");
             }
+
             attempts++;
         } while ((!doesUserSubstitutionAlphabetContain26Characters(userSubstitutionAlphabet)
+                || !isOnlyLowercaseLettersAZ(userSubstitutionAlphabet)
                 || !isUniqueEachCharacter(userSubstitutionAlphabet))
                 && attempts < MAX_ATTEMPTS);
-
         return userSubstitutionAlphabet;
     }
 
@@ -121,7 +137,7 @@ public class SubstitutionCipher {
 
         if (shouldEncrypt != 1 && shouldEncrypt != 2) {
             System.err.println("Nombre de tentatives dépassé. Fermeture du programme.");
-            System.exit(1); // Trouvé en cherchant comment stopper le programme mais on ne l'a pas encore vu.
+            System.exit(1);
         }
         return shouldEncrypt;
     }
@@ -134,17 +150,17 @@ public class SubstitutionCipher {
 
     // Consigne 4
     public static String cipher(String textToEncrypt, String alphabet, String substitutionAlphabet, int cipherIterations) {
-        String resultText = "";
+        String encryptedText = "";
         for (int iteration = 0; iteration < cipherIterations; iteration++) {
-            resultText = cipher(textToEncrypt, alphabet, substitutionAlphabet);
-            textToEncrypt = resultText;
+            encryptedText = cipher(textToEncrypt, alphabet, substitutionAlphabet);
+            textToEncrypt = encryptedText;
         }
-        return resultText;
+        return encryptedText;
     }
 
     // Consigne 3
     public static String cipher(String textToEncrypt, String alphabet, String substitutionAlphabet) {
-        String resultText = "";
+        String encryptedText = "";
 
         for (int textIndex = 0; textIndex < textToEncrypt.length(); textIndex++) {
 
@@ -154,22 +170,32 @@ public class SubstitutionCipher {
             if (currentCharIndex >= 0) {
                 currentChar = substitutionAlphabet.charAt(currentCharIndex);
             }
-            resultText += currentChar;
+            encryptedText += currentChar;
         }
-        return resultText;
+        return encryptedText;
     }
 
-    // Consigne 2
-    // Solution qui n'est probablement pas bonne car une lettre peut etre "cryptée" plusieurs fois mais je ne vois pas comment faire
+    // ✅ Consigne 2 : correction replaceAll sans "double chiffrement"
+    // Principe traditionnel : 2 passes
+    // 1) Remplacer chaque lettre par un marqueur temporaire unique
+    // 2) Remplacer chaque marqueur par la lettre finale de substitution
     public static String encryptTextV2(String text) {
         String encryptedText = text;
 
+        // Pass 1 : on remplace a..z par des marqueurs temporaires
         for (int index = 0; index < latinAlphabet.length(); index++) {
-
-            encryptedText = encryptedText.replaceAll(
-                    String.valueOf(latinAlphabet.charAt(index)),
-                    String.valueOf(substitutionAlphabet.charAt(index)));
+            String sourceLetter = String.valueOf(latinAlphabet.charAt(index));
+            String marker = "__" + index + "__"; // marqueur unique
+            encryptedText = encryptedText.replaceAll(sourceLetter, marker);
         }
+
+        // Pass 2 : on remplace les marqueurs par les lettres de substitution
+        for (int index = 0; index < substitutionAlphabet.length(); index++) {
+            String marker = "__" + index + "__";
+            String targetLetter = String.valueOf(substitutionAlphabet.charAt(index));
+            encryptedText = encryptedText.replaceAll(marker, targetLetter);
+        }
+
         return encryptedText;
     }
 
