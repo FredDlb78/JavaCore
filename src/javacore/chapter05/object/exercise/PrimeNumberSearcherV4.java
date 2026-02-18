@@ -18,9 +18,9 @@ public class PrimeNumberSearcherV4 {
     public static void searchPrimeNumber(int maxLimit) {
         boolean[] isEliminated = new boolean[maxLimit + 1];
 
-        for (int i = 2; i <= maxLimit; i++) {
-            if (!isEliminated[i]) {
-                for (int multiple = i * 2; multiple <= maxLimit; multiple += i) {
+        for (int potentialPrimeNumber = 2; potentialPrimeNumber <= maxLimit; potentialPrimeNumber++) {
+            if (!isEliminated[potentialPrimeNumber]) {
+                for (int multiple = potentialPrimeNumber * 2; multiple <= maxLimit; multiple += potentialPrimeNumber) {
                     isEliminated[multiple] = true;
                 }
             }
