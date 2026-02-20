@@ -1,5 +1,6 @@
 package javacore.chapter05.object.exercise;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class GradesAnalyzer {
@@ -9,7 +10,7 @@ public class GradesAnalyzer {
 
     public static void main(String [] args) {
         int[] gradesArray = setGrades();
-        System.out.println("La moyenne de vos notes est : " + getAverage(gradesArray));
+        getAverage(gradesArray);
     }
 
     public static double getAverage(int[] gradesArray) {
@@ -17,13 +18,15 @@ public class GradesAnalyzer {
         for (int noteIndex = 0; noteIndex < gradesArray.length; noteIndex++) {
             gradesTotal += gradesArray[noteIndex];
         }
-        return (double) gradesTotal / gradesArray.length;
+        double gradesAverage = (double) gradesTotal / gradesArray.length;
+        System.out.println("Moyenne générale: " + gradesAverage);
+        return gradesAverage;
     }
 
     public static int[] setGrades() {
         int gradesNumber = requestNotesNumber();
         int[] grades = new int[gradesNumber];
-        int gradeIndex = 0;
+        int gradeIndex;
 
         for (gradeIndex = 0; gradeIndex < gradesNumber; gradeIndex++) {
             byte attempts = 0;
@@ -44,7 +47,7 @@ public class GradesAnalyzer {
                 grades[gradeIndex] = 0;
             }
         }
-
+        System.out.println("Notes : " + Arrays.toString(grades));
         return grades;
     }
 
@@ -63,7 +66,7 @@ public class GradesAnalyzer {
                 break;
             }
         } while (attempts < MAX_ATTEMPTS);
-
+        System.out.println("Nombre de notes : " + gradesNumber);
         return gradesNumber;
     }
 }
