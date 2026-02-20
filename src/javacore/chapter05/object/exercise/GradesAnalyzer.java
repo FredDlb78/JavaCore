@@ -1,62 +1,69 @@
 package javacore.chapter05.object.exercise;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class GradesAnalyzer {
 
-    private static final byte MAX_ATTEMPTS = 3;
+    private static final int MAX_ATTEMPTS = 3;
     static Scanner sc = new Scanner(System.in);
 
     public static void main(String [] args) {
-        //
-        System.out.println(Arrays.toString(setNotes()));
+        int[] gradesArray = setGrades();
+        System.out.println("La moyenne de vos notes est : " + getAverage(gradesArray));
     }
 
-    public static byte[] setNotes() {
-        byte notesNumber = requestNotesNumber();
-        byte[] notes = new byte[notesNumber];
-        byte noteIndex = 0;
+    public static double getAverage(int[] gradesArray) {
+        int gradesTotal = 0;
+        for (int noteIndex = 0; noteIndex < gradesArray.length; noteIndex++) {
+            gradesTotal += gradesArray[noteIndex];
+        }
+        return (double) gradesTotal / gradesArray.length;
+    }
 
-        for (noteIndex = 0; noteIndex < notesNumber; noteIndex++) {
+    public static int[] setGrades() {
+        int gradesNumber = requestNotesNumber();
+        int[] grades = new int[gradesNumber];
+        int gradeIndex = 0;
+
+        for (gradeIndex = 0; gradeIndex < gradesNumber; gradeIndex++) {
             byte attempts = 0;
             do {
-                System.out.print("Saisissez votre " + (noteIndex + 1) + "e note :");
-                notes[noteIndex] = sc.nextByte();
+                System.out.print("Saisissez votre " + (gradeIndex + 1) + "e note :");
+                grades[gradeIndex] = sc.nextByte();
                 attempts++;
 
-                if (notes[noteIndex] < 0 || notes[noteIndex] > 20) {
+                if (grades[gradeIndex] < 0 || grades[gradeIndex] > 20) {
                     System.out.println("Valeur invalide, veuillez saisir une valeur entre 0 et 20 inclu.");
                 } else {
                     break;
                 }
             } while (attempts < MAX_ATTEMPTS);
 
-            if (notes[noteIndex] < 0 || notes[noteIndex] > 20) {
+            if (grades[gradeIndex] < 0 || grades[gradeIndex] > 20) {
                 System.out.println("Nombre de tentatives maximum atteint. Note mise à 0 par défaut.");
-                notes[noteIndex] = 0;
+                grades[gradeIndex] = 0;
             }
         }
 
-        return notes;
+        return grades;
     }
 
 
-    public static byte requestNotesNumber() {
-        byte attempts = 0;
-        byte numberOfNotes;
+    public static int requestNotesNumber() {
+        int attempts = 0;
+        int gradesNumber;
         do {
             System.out.print("Combien de notes souhaitez-vous saisir ? (Min: 2 - Max: 30) :");
-            numberOfNotes = sc.nextByte();
+            gradesNumber = sc.nextByte();
             attempts++;
 
-            if (numberOfNotes < 2 || numberOfNotes > 30) {
+            if (gradesNumber < 2 || gradesNumber > 30) {
                 System.err.println("Valeur invalide, veuillez saisir une valeur entre 2 et 30 inclu.");
             } else {
                 break;
             }
         } while (attempts < MAX_ATTEMPTS);
 
-        return numberOfNotes;
+        return gradesNumber;
     }
 }
