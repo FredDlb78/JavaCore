@@ -10,19 +10,57 @@ public class GradesAnalyzer {
 
     public static void main(String [] args) {
         int[] gradesArray = setGrades();
-        getAverage(gradesArray);
+        //getAverage(gradesArray);
+        //System.out.println("La plus petite note est : " + getMinGrade(gradesArray));
+        System.out.println("La plus grande note est : " + getMaxGrade(gradesArray));
     }
 
+    // 6
+/*    public static int getGradeCountAboveThreshold(int[] gradesArray, int threshold) {
+
+    }*/
+
+    // 5
+    public static double getMaxGrade(int[] gradesArray) {
+        int maxGrade = gradesArray[0];
+
+        for (int gradeIndex = 1; gradeIndex < gradesArray.length; gradeIndex++) {
+            int currentGrade = gradesArray[gradeIndex];
+            if (currentGrade > maxGrade) {
+                maxGrade = currentGrade;
+            }
+        }
+        return maxGrade;
+    }
+
+    // 4
+    public static double getMinGrade(int[] gradesArray) {
+        int minGrade = gradesArray[0];
+
+        for (int gradeIndex = 1; gradeIndex < gradesArray.length; gradeIndex++) {
+            int currentGrade = gradesArray[gradeIndex];
+            int previousGrade = gradesArray[gradeIndex - 1];
+            if (currentGrade <= previousGrade) {
+                minGrade = currentGrade;
+            } else {
+                minGrade = gradesArray[0];
+            }
+        }
+        return minGrade;
+    }
+
+    // 3
     public static double getAverage(int[] gradesArray) {
         int gradesTotal = 0;
-        for (int noteIndex = 0; noteIndex < gradesArray.length; noteIndex++) {
-            gradesTotal += gradesArray[noteIndex];
+        for (int gradeIndex = 0; gradeIndex < gradesArray.length; gradeIndex++) {
+            gradesTotal += gradesArray[gradeIndex];
         }
         double gradesAverage = (double) gradesTotal / gradesArray.length;
         System.out.println("Moyenne générale: " + gradesAverage);
         return gradesAverage;
     }
 
+    // 2
     public static int[] setGrades() {
         int gradesNumber = requestNotesNumber();
         int[] grades = new int[gradesNumber];
@@ -47,11 +85,11 @@ public class GradesAnalyzer {
                 grades[gradeIndex] = 0;
             }
         }
-        System.out.println("Notes : " + Arrays.toString(grades));
+        //System.out.println("Notes : " + Arrays.toString(grades));
         return grades;
     }
 
-
+    // 1
     public static int requestNotesNumber() {
         int attempts = 0;
         int gradesNumber;
