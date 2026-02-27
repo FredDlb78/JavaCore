@@ -1,6 +1,5 @@
 package javacore.chapter05.object.exercise;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class GradesAnalyzer {
@@ -10,15 +9,24 @@ public class GradesAnalyzer {
 
     public static void main(String [] args) {
         int[] gradesArray = setGrades();
-        //getAverage(gradesArray);
-        //System.out.println("La plus petite note est : " + getMinGrade(gradesArray));
-        System.out.println("La plus grande note est : " + getMaxGrade(gradesArray));
+        int threshold = 12;
+        int countAbove = getGradeCountAboveThreshold(gradesArray, threshold);
+        double percentAbove = (double) countAbove / gradesArray.length * 100;
+        System.out.println("Nombre de notes > " + threshold + " = " + countAbove + " (soit " + percentAbove + "%)");
+
     }
 
     // 6
-/*    public static int getGradeCountAboveThreshold(int[] gradesArray, int threshold) {
+    public static int getGradeCountAboveThreshold(int[] gradesArray, int threshold) {
+        int count = 0;
 
-    }*/
+        for (int gradeIndex = 0; gradeIndex < gradesArray.length; gradeIndex++) {
+            if (gradesArray[gradeIndex] > threshold) {
+                count += 1;
+            }
+        }
+        return count;
+    }
 
     // 5
     public static double getMaxGrade(int[] gradesArray) {
@@ -39,11 +47,8 @@ public class GradesAnalyzer {
 
         for (int gradeIndex = 1; gradeIndex < gradesArray.length; gradeIndex++) {
             int currentGrade = gradesArray[gradeIndex];
-            int previousGrade = gradesArray[gradeIndex - 1];
-            if (currentGrade <= previousGrade) {
+            if (currentGrade < minGrade) {
                 minGrade = currentGrade;
-            } else {
-                minGrade = gradesArray[0];
             }
         }
         return minGrade;
@@ -56,7 +61,6 @@ public class GradesAnalyzer {
             gradesTotal += gradesArray[gradeIndex];
         }
         double gradesAverage = (double) gradesTotal / gradesArray.length;
-        System.out.println("Moyenne générale: " + gradesAverage);
         return gradesAverage;
     }
 
