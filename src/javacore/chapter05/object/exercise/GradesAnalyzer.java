@@ -13,7 +13,28 @@ public class GradesAnalyzer {
         int countAbove = getGradeCountAboveThreshold(gradesArray, threshold);
         double percentAbove = (double) countAbove / gradesArray.length * 100;
         System.out.println("Nombre de notes > " + threshold + " = " + countAbove + " (soit " + percentAbove + "%)");
+        int from = 12;
+        int to = 18;
+        int countRange = getGradeCountBetweenRange(gradesArray, from, to);
+        double percentRange = (double) countRange / gradesArray.length * 100;
+        System.out.println("Nombre de notes de " + from + " à " + to + " : " + countRange + " (soit " + percentRange + "%)");
 
+    }
+
+    // 8
+
+
+    // 7
+    public static int getGradeCountBetweenRange(int[] gradesArray, int from, int to) {
+        int count = 0;
+
+        for (int gradeIndex = 0; gradeIndex < gradesArray.length; gradeIndex++) {
+            int currentGrade = gradesArray[gradeIndex];
+            if ( from <= currentGrade  && currentGrade <= to) {
+                count += 1;
+            }
+        }
+        return count;
     }
 
     // 6
@@ -21,7 +42,8 @@ public class GradesAnalyzer {
         int count = 0;
 
         for (int gradeIndex = 0; gradeIndex < gradesArray.length; gradeIndex++) {
-            if (gradesArray[gradeIndex] > threshold) {
+            int currentGrade = gradesArray[gradeIndex];
+            if (currentGrade > threshold) {
                 count += 1;
             }
         }
@@ -66,7 +88,7 @@ public class GradesAnalyzer {
 
     // 2
     public static int[] setGrades() {
-        int gradesNumber = requestNotesNumber();
+        int gradesNumber = requestGradesNumber();
         int[] grades = new int[gradesNumber];
         int gradeIndex;
 
@@ -89,12 +111,11 @@ public class GradesAnalyzer {
                 grades[gradeIndex] = 0;
             }
         }
-        //System.out.println("Notes : " + Arrays.toString(grades));
         return grades;
     }
 
     // 1
-    public static int requestNotesNumber() {
+    public static int requestGradesNumber() {
         int attempts = 0;
         int gradesNumber;
         do {
