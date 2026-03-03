@@ -10,6 +10,7 @@ public class GradesAnalyzer {
     static final int MAX_GRADES_NUMBER = 30;
     static final int MIN_GRADE = 0;
     static final int MAX_GRADE = 20;
+    static final int MIN_ARRAY_SIZE = 2;
 
     static Scanner sc = new Scanner(System.in);
 
@@ -60,12 +61,12 @@ public class GradesAnalyzer {
 
 
     // 7
-    public static int getGradeCountBetweenRange(int[] gradesArray, int from, int to) {
+    public static int getGradeCountBetweenRange(int[] gradesArray, int min, int max) {
         int count = 0;
 
         for (int gradeIndex = 0; gradeIndex < gradesArray.length; gradeIndex++) {
             int currentGrade = gradesArray[gradeIndex];
-            if (from <= currentGrade && currentGrade <= to) {
+            if (currentGrade >= min && currentGrade <= max) {
                 count += 1;
             }
         }
@@ -87,6 +88,7 @@ public class GradesAnalyzer {
 
     // 5
     public static double getMaxGrade(int[] gradesArray) {
+        if (gradesArray.length < MIN_ARRAY_SIZE) return -1;
         int maxGrade = gradesArray[0];
 
         for (int gradeIndex = 1; gradeIndex < gradesArray.length; gradeIndex++) {
@@ -100,6 +102,7 @@ public class GradesAnalyzer {
 
     // 4
     public static double getMinGrade(int[] gradesArray) {
+        if (gradesArray.length < MIN_ARRAY_SIZE) return -1;
         int minGrade = gradesArray[0];
 
         for (int gradeIndex = 1; gradeIndex < gradesArray.length; gradeIndex++) {
@@ -113,6 +116,7 @@ public class GradesAnalyzer {
 
     // 3
     public static double getAverage(int[] gradesArray) {
+        if (gradesArray.length < MIN_ARRAY_SIZE) return -1;
         int gradesTotal = 0;
         for (int gradeIndex = 0; gradeIndex < gradesArray.length; gradeIndex++) {
             gradesTotal += gradesArray[gradeIndex];
