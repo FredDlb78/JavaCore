@@ -13,14 +13,44 @@ public class BubbleSorting {
     }
 
     // 3
-/*    Tri par insertion (Insertion Sort) : tu parcours le tableau de gauche à droite en considérant qu’à chaque étape, la partie
+    /*Tri par insertion (Insertion Sort) : tu parcours le tableau de gauche à droite en considérant qu’à chaque étape, la partie
     gauche est déjà triée, puis tu “insères” l’élément courant à sa bonne place en décalant les plus grands. Simple, très bon si
-    le tableau est presque trié, mais lent sur gros volumes (≈ O(n²)).
+    le tableau est presque trié, mais lent sur gros volumes (≈ O(n²)).*/
 
-    Tri rapide (Quick Sort) : tu choisis un pivot, tu partitionnes le tableau (plus petits à gauche, plus grands à droite),
+    public static int[] insertionSort(int[] numbers) {
+
+    // On commence à l'index 1
+    // Car l'élément à l'index 0 est considéré comme déjà "trié"
+    for (int insertionIndex = 1; insertionIndex < numbers.length; insertionIndex++) {
+
+        // On sauvegarde la valeur actuelle
+        int currentValue = numbers[insertionIndex];
+
+        // On regarde à gauche
+        int compareIndex = insertionIndex - 1;
+
+        // Tant que :
+        // - on n'est pas sorti du tableau
+        // - ET que l'élément à gauche est plus grand que currentValue
+        while (compareIndex >= 0 && numbers[compareIndex] > currentValue) {
+
+            // On décale l'élément vers la droite
+            numbers[compareIndex + 1] = numbers[compareIndex];
+
+            // On continue à regarder encore plus à gauche
+            compareIndex--;
+        }
+
+        // On insère la valeur à sa bonne position
+        numbers[compareIndex + 1] = currentValue;
+    }
+
+    return numbers;
+}
+
+    /*Tri rapide (Quick Sort) : tu choisis un pivot, tu partitionnes le tableau (plus petits à gauche, plus grands à droite),
     puis tu répètes la même opération récursivement sur chaque côté. Très performant en moyenne (≈ O(n log n)), mais
     plus délicat à coder et peut se dégrader si le pivot est mal choisi (pire cas ≈ O(n²)).*/
-
 
     // 2
 /*    Forces du tri à bulles :
