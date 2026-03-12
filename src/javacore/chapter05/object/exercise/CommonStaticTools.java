@@ -46,25 +46,13 @@ public class CommonStaticTools {
 
     public static double getMaxGrade(int[] gradesArray) {
         if (gradesArray.length < MIN_ARRAY_SIZE) return -1;
-        int maxGrade = gradesArray[0];
-
-        for (int gradeIndex = 1; gradeIndex < gradesArray.length; gradeIndex++) {
-            maxGrade = Math.max(maxGrade, gradesArray[gradeIndex]);
-        }
-
-        return maxGrade;
+        return Arrays.stream(gradesArray).max().getAsInt();
     }
 
     // 4
     public static double getMinGrade(int[] gradesArray) {
         if (gradesArray.length < MIN_ARRAY_SIZE) return -1;
-        int minGrade = gradesArray[0];
-
-        for (int gradeIndex = 1; gradeIndex < gradesArray.length; gradeIndex++) {
-            minGrade = Math.min(minGrade, gradesArray[gradeIndex]);
-        }
-
-        return minGrade;
+        return Arrays.stream(gradesArray).min().getAsInt();
     }
 
     public static double getSquareRoot(double number) {

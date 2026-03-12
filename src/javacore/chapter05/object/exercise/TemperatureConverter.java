@@ -2,6 +2,8 @@ package javacore.chapter05.object.exercise;
 
 public class TemperatureConverter {
 
+    private TemperatureConverter() {}
+
     public static final String CELSIUS_UNIT = "°C";
     public static final String FAHRENHEIT_UNIT = "°F";
     public static final String KELVIN_UNIT = "K";

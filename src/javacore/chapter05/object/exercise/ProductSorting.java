@@ -3,10 +3,9 @@ package javacore.chapter05.object.exercise;
 
 public class ProductSorting {
 
-    static final double ONE_DOLLAR = 1;
-    static final double ONE_DOLLAR_IN_EURO = ONE_DOLLAR * 0.95;
-    static final double ONE_DOLLAR_IN_YUAN = ONE_DOLLAR * 7.27;
-    static final double ONE_DOLLAR_IN_LIVRE = ONE_DOLLAR * 0.79;
+    static final double DOLLAR_EURO_RATIO = 1 / 0.95;
+    static final double DOLLAR_YUAN_RATIO = 1 / 7.27;
+    static final double DOLLAR_LIVRE_RATIO = 1 / 0.79;
 
     public String name;
     public String category;
@@ -35,11 +34,11 @@ public class ProductSorting {
         System.out.println("----Conversion----");
         for (int productIndex = 0; productIndex < productArray.length; productIndex++) {
             if (productArray[productIndex].currency == '€') {
-                productArray[productIndex].price /= ONE_DOLLAR_IN_EURO;
+                productArray[productIndex].price *= DOLLAR_EURO_RATIO;
             } else if (productArray[productIndex].currency == '£') {
-                productArray[productIndex].price /= ONE_DOLLAR_IN_LIVRE;
+                productArray[productIndex].price *= DOLLAR_LIVRE_RATIO;
             } else if (productArray[productIndex].currency == '¥'){
-                productArray[productIndex].price /= ONE_DOLLAR_IN_YUAN;
+                productArray[productIndex].price *= DOLLAR_YUAN_RATIO;
             }
             productArray[productIndex].currency = '$';
 
